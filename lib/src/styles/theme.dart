@@ -36,6 +36,7 @@ class XpThemeData with Diagnosticable {
   final Color textColor;
   late final ButtonStyle? buttonStyle;
   final ProgressBarStyle progressBarStyle;
+  final Color titleBarColor;
 
   static const Color _lightBackgroundDefault = Color(0xFFF8F8F8);
 
@@ -45,7 +46,9 @@ class XpThemeData with Diagnosticable {
       this.backgroundColor = _lightBackgroundDefault,
       ButtonStyle? buttonStyle,
       this.progressBarStyle = const ProgressBarStyle(),
-      this.textColor = XpDefaultThemeColors.textColor}) {
+      this.textColor = XpDefaultThemeColors.textColor,
+      Color? titleBarColor})
+      : titleBarColor = titleBarColor ?? accentColor {
     print('theme Data');
     final HSLColor hslColor = HSLColor.fromColor(accentColor);
     lightAccentColor = hslColor.withLightness(0.9).toColor();

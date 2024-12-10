@@ -26,7 +26,7 @@ class _ButtonState extends State<Button> {
       ],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      stops: [0, 86, 100]);
+      stops: [0, .86, 1]);
   static const Gradient _tapBackground = LinearGradient(
       colors: [
         Color(0xFFCDCAC3),
@@ -36,7 +36,7 @@ class _ButtonState extends State<Button> {
       ],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      stops: [0, 8, 94, 100]);
+      stops: [0, .8, .94, 1]);
 
   @override
   Widget build(BuildContext context) {
