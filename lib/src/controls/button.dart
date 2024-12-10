@@ -1,31 +1,102 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'package:xp_ui/src/controls/styles/colors.dart';
 import 'package:xp_ui/src/controls/styles/theme.dart';
 
-class Button extends StatelessWidget {
+class Button extends StatefulWidget {
   final Widget child;
   final VoidCallback? onPressed;
-  const Button({super.key, required this.child, this.onPressed});
+  const Button({super.key, this.onPressed, required this.child});
+
+  @override
+  State<Button> createState() => _ButtonState();
+}
+
+class _ButtonState extends State<Button> {
+  bool _hover = false;
+  bool _tap = false;
+
+  static const Gradient _normalBackground = LinearGradient(
+      colors: [
+        Color(0xFFFFFFFF),
+        Color(0xFFecebe5),
+        Color(0xFFd8d0c4),
+      ],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      stops: [0, 86, 100]);
+  static const Gradient _tapBackground = LinearGradient(
+      colors: [
+        Color(0xFFCDCAC3),
+        Color(0xFFE3E3DB),
+        Color(0xFFE5E5DE),
+        Color(0xFFF2F2F1),
+      ],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      stops: [0, 8, 94, 100]);
 
   @override
   Widget build(BuildContext context) {
     final theme = XpTheme.of(context);
+    final buttonStyle = theme.buttonStyle ?? const ButtonStyle();
     return DecoratedBox(
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(3)),
-          border: Border.all(color: theme.buttonStyle.borderColor),
-          gradient: const LinearGradient(
-              colors: [
-                Color(0xFFFFFFFF),
-                Color(0xFFecebe5),
-                Color(0xFFd8d0c4),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0, 86, 100])),
-      child: ConstrainedBox(constraints: theme.buttonStyle.constraints, child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: child,
-      )),
+          boxShadow: _hover
+              ? [
+                  BoxShadow(
+                      inset: true,
+                      offset: const Offset(-1, 1),
+                      color: buttonStyle.hoverColorTop),
+                  BoxShadow(
+                      inset: true,
+                      offset: const Offset(1, 2),
+                      color: buttonStyle.hoverColorRight),
+                  BoxShadow(
+                      inset: true,
+                      offset: const Offset(-2, 2),
+                      color: buttonStyle.hoverColorLeft),
+                  BoxShadow(
+                      inset: true,
+                      offset: const Offset(2, -2),
+                      color: buttonStyle.hoverColorBottom)
+                ]
+              : [],
+          border: Border.all(
+              color: buttonStyle.borderColor,
+              strokeAlign: BorderSide.strokeAlignOutside,
+              width: 0.5),
+          gradient: _tap ? _tapBackground : _normalBackground),
+      child: MouseRegion(
+        onEnter: (event) {
+          setState(() => _hover = true);
+        },
+        onExit: (event) {
+          setState(() => _hover = false);
+        },
+        child: GestureDetector(
+          onTapDown: (details) {
+            setState(() => _tap = true);
+          },
+          onTap: widget.onPressed,
+          onTapUp: (details) {
+            setState(() => _tap = false);
+          },
+          onLongPressDown: (details) {
+            setState(() => _tap = true);
+          },
+          onLongPressUp: () {
+            setState(() => _tap = false);
+          },
+          child: ConstrainedBox(
+              constraints: buttonStyle.constraints,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: widget.child,
+              )),
+        ),
+      ),
     );
   }
 }
