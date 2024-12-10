@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart' as m;
-import 'package:xp_ui/src/controls/styles/colors.dart';
-import 'package:xp_ui/src/controls/styles/theme.dart';
+import 'package:xp_ui/src/styles/colors.dart';
+import 'package:xp_ui/src/styles/theme.dart';
 
 class XpApp extends StatefulWidget {
   const XpApp(
@@ -189,6 +189,7 @@ class _XpAppState extends State<XpApp> {
       widget.routerDelegate != null || widget.routerConfig != null;
 
   m.ThemeData get mTheme => m.ThemeData(
+    fontFamily: 'Trebuchet',
       colorScheme: m.ColorScheme.fromSeed(
           seedColor: widget.theme?.accentColor ?? XpColors.moonBlue));
 

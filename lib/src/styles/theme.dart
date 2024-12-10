@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:xp_ui/src/controls/styles/colors.dart';
+import 'package:xp_ui/src/styles/colors.dart';
 
 class XpTheme extends StatelessWidget {
   const XpTheme({super.key, required this.data, required this.child});
@@ -33,6 +33,7 @@ class XpThemeData with Diagnosticable {
   late final Color lightAccentColor;
   final Color activeColor;
   final Color backgroundColor;
+  final Color textColor;
   late final ButtonStyle? buttonStyle;
   final ProgressBarStyle progressBarStyle;
 
@@ -43,7 +44,8 @@ class XpThemeData with Diagnosticable {
       this.activeColor = XpColors.orange,
       this.backgroundColor = _lightBackgroundDefault,
       ButtonStyle? buttonStyle,
-      this.progressBarStyle = const ProgressBarStyle()}) {
+      this.progressBarStyle = const ProgressBarStyle(),
+      this.textColor = XpDefaultThemeColors.textColor}) {
     print('theme Data');
     final HSLColor hslColor = HSLColor.fromColor(accentColor);
     lightAccentColor = hslColor.withLightness(0.9).toColor();

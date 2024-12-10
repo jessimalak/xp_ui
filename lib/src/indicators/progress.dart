@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:xp_ui/src/controls/styles/colors.dart';
-import 'package:xp_ui/src/controls/styles/theme.dart';
+import 'package:xp_ui/src/styles/colors.dart';
+import 'package:xp_ui/xp_ui.dart';
 
 class ProgressBar extends StatelessWidget {
   const ProgressBar(

@@ -19,4 +19,6 @@ class XpDefaultThemeColors {
   static const Color buttonHoverColorLeft = Color(0xfffbc761);
   static const Color buttonHoverColorBottom = Color(0xffe5a01a);
   static const Color outLineColor = Color(0xff686868);
+  static const Color textColor = Color(0xff222222);
+  static const Color diabledTextColor = Color(0x4B101010);
 }

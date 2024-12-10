@@ -1,12 +1,14 @@
 import 'package:flutter/widgets.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
-import 'package:xp_ui/src/controls/styles/colors.dart';
-import 'package:xp_ui/src/controls/styles/theme.dart';
+import 'package:xp_ui/src/styles/colors.dart';
+import 'package:xp_ui/src/styles/theme.dart';
 
 class Button extends StatefulWidget {
   final Widget child;
   final VoidCallback? onPressed;
   const Button({super.key, this.onPressed, required this.child});
+
+  bool get enabled => onPressed != null;
 
   @override
   State<Button> createState() => _ButtonState();
@@ -69,23 +71,29 @@ class _ButtonState extends State<Button> {
               width: 0.5),
           gradient: _tap ? _tapBackground : _normalBackground),
       child: MouseRegion(
-        onEnter: (event) {
-          setState(() => _hover = true);
-        },
+        onEnter: !widget.enabled
+            ? null
+            : (event) {
+                setState(() => _hover = true);
+              },
         onExit: (event) {
           setState(() => _hover = false);
         },
         child: GestureDetector(
-          onTapDown: (details) {
-            setState(() => _tap = true);
-          },
+          onTapDown: !widget.enabled
+              ? null
+              : (details) {
+                  setState(() => _tap = true);
+                },
           onTap: widget.onPressed,
           onTapUp: (details) {
             setState(() => _tap = false);
           },
-          onLongPressDown: (details) {
-            setState(() => _tap = true);
-          },
+          onLongPressDown: !widget.enabled
+              ? null
+              : (details) {
+                  setState(() => _tap = true);
+                },
           onLongPressUp: () {
             setState(() => _tap = false);
           },
@@ -93,7 +101,12 @@ class _ButtonState extends State<Button> {
               constraints: buttonStyle.constraints,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: widget.child,
+                child: DefaultTextStyle(
+                    style: TextStyle(
+                        color: !widget.enabled
+                            ? XpDefaultThemeColors.diabledTextColor
+                            : theme.textColor),
+                    child: widget.child),
               )),
         ),
       ),
