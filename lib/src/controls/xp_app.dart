@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart' as m;
+import 'package:xp_ui/src/controls/styles/colors.dart';
 import 'package:xp_ui/src/controls/styles/theme.dart';
 
 class XpApp extends StatefulWidget {
@@ -20,7 +21,7 @@ class XpApp extends StatefulWidget {
       this.localizationsDelegates,
       this.localeListResolutionCallback,
       this.localeResolutionCallback,
-      this.supportedLocales = const <Locale>[Locale('en', 'US'), Locale('es', 'ES')],
+      this.supportedLocales = const <Locale>[Locale('en', 'US')],
       this.showPerformanceOverlay = false,
       this.checkerboardRasterCacheImages = false,
       this.checkerboardOffscreenLayers = false,
@@ -49,7 +50,10 @@ class XpApp extends StatefulWidget {
       this.localizationsDelegates,
       this.localeListResolutionCallback,
       this.localeResolutionCallback,
-      this.supportedLocales = const <Locale>[Locale('en', 'US'), Locale('es', 'ES')],
+      this.supportedLocales = const <Locale>[
+        Locale('en', 'US'),
+        Locale('es', 'ES')
+      ],
       this.showPerformanceOverlay = false,
       this.checkerboardRasterCacheImages = false,
       this.checkerboardOffscreenLayers = false,
@@ -177,12 +181,16 @@ class _XpAppState extends State<XpApp> {
 
   @override
   Widget build(BuildContext context) {
-    return HeroControllerScope(controller: _heroController, child: _builder(context, widget.home));
+    return HeroControllerScope(
+        controller: _heroController, child: _builder(context, widget.home));
   }
 
-  bool get _usesRouter => widget.routerDelegate != null || widget.routerConfig != null;
+  bool get _usesRouter =>
+      widget.routerDelegate != null || widget.routerConfig != null;
 
-  
+  m.ThemeData get mTheme => m.ThemeData(
+      colorScheme: m.ColorScheme.fromSeed(
+          seedColor: widget.theme?.accentColor ?? XpColors.moonBlue));
 
   Widget _xpBuilder(BuildContext context, Widget? child) {
     return XpTheme(
@@ -190,7 +198,11 @@ class _XpAppState extends State<XpApp> {
         child: widget.builder != null
             ? Builder(
                 builder: (context) => Overlay(
-                      initialEntries: [OverlayEntry(builder: (context) => widget.builder!(context, child))],
+                      initialEntries: [
+                        OverlayEntry(
+                            builder: (context) =>
+                                widget.builder!(context, child))
+                      ],
                     ))
             : child ?? const SizedBox.shrink());
   }
@@ -219,6 +231,7 @@ class _XpAppState extends State<XpApp> {
         debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
         shortcuts: widget.shortcuts,
         actions: widget.actions,
+        theme: mTheme,
         // scrollBehavior: widget.scr,
       );
     }
@@ -245,6 +258,7 @@ class _XpAppState extends State<XpApp> {
       debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
       shortcuts: widget.shortcuts,
       actions: widget.actions,
+      theme: mTheme,
       // scrollBehavior: widget.scr,
     );
   }
