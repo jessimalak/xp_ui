@@ -49,7 +49,7 @@ class ProgressBar extends StatelessWidget {
                   strokeAlign: BorderSide.strokeAlignOutside),
               borderRadius: const BorderRadius.all(Radius.circular(3))),
           child: value == null
-              ? _ProgressIndeterminatedBarWidget()
+              ? RepaintBoundary(child: _ProgressIndeterminatedBarWidget())
               : CustomPaint(
                   painter: _ProgressDeterminatedBarPainter(
                     value!,
