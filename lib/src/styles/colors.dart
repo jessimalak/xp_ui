@@ -12,7 +12,7 @@ class XpColors {
   static const Color green = Color(0xff2ed330);
   static const Color red = Color(0xff9b1e00);
   static const Color lightRed = Color(0xffF0A694);
-  static const Color darkRed = Color(0xFF942304);
+  static const Color darkRed = Color(0xFF852308);
 }
 
 class XpDefaultThemeColors {

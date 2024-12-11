@@ -157,49 +157,70 @@ class _TitleBarButtonHoverState extends State<_TitleBarButtonHover> {
   }
 }
 
-class XpCloseButton extends StatelessWidget {
+class XpCloseButton extends StatefulWidget {
   final VoidCallback? onPressed;
   const XpCloseButton({super.key, this.onPressed});
 
+  @override
+  State<XpCloseButton> createState() => _XpCloseButtonState();
+}
+
+class _XpCloseButtonState extends State<XpCloseButton> {
+  bool _tap = false;
   @override
   Widget build(BuildContext context) {
     final TitleBarStyle titleBarStyle = XpTheme.of(context).titleBarStyle;
     return Padding(
       padding: const EdgeInsets.only(left: 2),
       child: GestureDetector(
-        onTap: onPressed ??
+        onTap: widget.onPressed ??
             () {
               Navigator.pop(context);
             },
+        onTapDown: (details) {
+          setState(() => _tap = true);
+        },
+        onTapUp: (details) {
+          setState(() => _tap = false);
+        },
+        onLongPressDown: (details) {
+          setState(() => _tap = true);
+        },
+        onLongPressUp: () {
+          setState(() => _tap = false);
+        },
         child: DecoratedBox(
           decoration: BoxDecoration(
               border: Border.all(color: titleBarStyle.foregroundColor),
               borderRadius: const BorderRadius.all(Radius.circular(3)),
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
                     inset: true,
-                    offset: Offset(-1, 1),
-                    color: XpColors.lightRed,
+                    offset: const Offset(-1, 1),
+                    color: _tap ? XpColors.darkRed : XpColors.lightRed,
                     blurRadius: 1),
                 BoxShadow(
                     inset: true,
-                    offset: Offset(1, 2),
-                    color: XpColors.lightRed,
+                    offset: const Offset(1, 2),
+                    color: _tap ? XpColors.darkRed : XpColors.lightRed,
                     blurRadius: 1),
-                BoxShadow(
+                const BoxShadow(
                     inset: true,
                     offset: Offset(-2, 2),
                     color: XpColors.red,
                     blurRadius: 1),
-                BoxShadow(
+                const BoxShadow(
                     inset: true,
                     offset: Offset(2, -2),
                     color: XpColors.red,
                     blurRadius: 1)
               ],
-              gradient: const LinearGradient(
-                  colors: [XpColors.lightRed, XpColors.red],
-                  begin: Alignment.topLeft)),
+              gradient: _tap
+                  ? const LinearGradient(
+                      colors: [XpColors.red, XpColors.darkRed])
+                  : const LinearGradient(
+                      colors: [XpColors.lightRed, XpColors.red],
+                      begin: Alignment.topLeft)),
           child: _TitleBarButtonHover(
             child: Image.asset(
               ActionButtonIcon.close.assetPath,
@@ -212,10 +233,17 @@ class XpCloseButton extends StatelessWidget {
   }
 }
 
-class TitleBarActionButton extends StatelessWidget {
+class TitleBarActionButton extends StatefulWidget {
   final ActionButtonIcon icon;
   final VoidCallback? onPressed;
   const TitleBarActionButton({super.key, this.onPressed, required this.icon});
+
+  @override
+  State<TitleBarActionButton> createState() => _TitleBarActionButtonState();
+}
+
+class _TitleBarActionButtonState extends State<TitleBarActionButton> {
+  bool _tap = false;
 
   @override
   Widget build(BuildContext context) {
@@ -223,10 +251,19 @@ class TitleBarActionButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 2),
       child: GestureDetector(
-        onTap: onPressed ??
-            () {
-              Navigator.pop(context);
-            },
+        onTap: widget.onPressed,
+        onTapDown: (details) {
+          setState(() => _tap = true);
+        },
+        onTapUp: (details) {
+          setState(() => _tap = false);
+        },
+        onLongPressDown: (details) {
+          setState(() => _tap = true);
+        },
+        onLongPressUp: () {
+          setState(() => _tap = false);
+        },
         child: DecoratedBox(
           decoration: BoxDecoration(
               border: Border.all(color: titleBarStyle.foregroundColor),
@@ -235,17 +272,23 @@ class TitleBarActionButton extends StatelessWidget {
                 BoxShadow(
                     inset: true,
                     offset: const Offset(-1, 1),
-                    color: titleBarStyle.backgroundShade2,
+                    color: _tap
+                        ? titleBarStyle.backgroundShade5
+                        : titleBarStyle.backgroundShade2,
                     blurRadius: 1),
                 BoxShadow(
                     inset: true,
                     offset: const Offset(1, 2),
-                    color: titleBarStyle.backgroundShade2,
+                    color: _tap
+                        ? titleBarStyle.backgroundShade5
+                        : titleBarStyle.backgroundShade2,
                     blurRadius: 1),
                 BoxShadow(
                     inset: true,
                     offset: const Offset(-2, 2),
-                    color: titleBarStyle.backgroundColor,
+                    color: _tap
+                        ? titleBarStyle.backgroundShade3
+                        : titleBarStyle.backgroundColor,
                     blurRadius: 1),
                 BoxShadow(
                     inset: true,
@@ -253,13 +296,18 @@ class TitleBarActionButton extends StatelessWidget {
                     color: titleBarStyle.backgroundColor,
                     blurRadius: 1)
               ],
-              gradient: LinearGradient(colors: [
-                titleBarStyle.backgroundShade1,
-                titleBarStyle.backgroundShade3
-              ], begin: Alignment.topLeft)),
+              gradient: _tap
+                  ? LinearGradient(colors: [
+                      titleBarStyle.backgroundShade3,
+                      titleBarStyle.backgroundShade5
+                    ])
+                  : LinearGradient(colors: [
+                      titleBarStyle.backgroundShade1,
+                      titleBarStyle.backgroundShade3
+                    ], begin: Alignment.topLeft)),
           child: _TitleBarButtonHover(
             child: Image.asset(
-              icon.assetPath,
+              widget.icon.assetPath,
               package: 'xp_ui',
             ),
           ),
