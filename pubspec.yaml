@@ -17,15 +17,13 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^4.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
-
-  # To add assets to your package, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/action_icons/close_icon.png
+    - assets/action_icons/maximize_icon.png
+    - assets/action_icons/maximized_icon.png
+    - assets/action_icons/minimize_icon.png
+    - assets/action_icons/help_icon.png
   #   - images/a_dot_ham.jpeg
   #
   # For details regarding assets in packages, see

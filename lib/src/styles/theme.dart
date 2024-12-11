@@ -36,7 +36,7 @@ class XpThemeData with Diagnosticable {
   final Color textColor;
   late final ButtonStyle? buttonStyle;
   final ProgressBarStyle progressBarStyle;
-  final Color titleBarColor;
+  final TitleBarStyle titleBarStyle;
 
   static const Color _lightBackgroundDefault = Color(0xFFF8F8F8);
 
@@ -47,8 +47,9 @@ class XpThemeData with Diagnosticable {
       ButtonStyle? buttonStyle,
       this.progressBarStyle = const ProgressBarStyle(),
       this.textColor = XpDefaultThemeColors.textColor,
-      Color? titleBarColor})
-      : titleBarColor = titleBarColor ?? accentColor {
+      TitleBarStyle? titleBarStyle})
+      : titleBarStyle =
+            titleBarStyle ?? TitleBarStyle(backgroundColor: accentColor) {
     print('theme Data');
     final HSLColor hslColor = HSLColor.fromColor(accentColor);
     lightAccentColor = hslColor.withLightness(0.9).toColor();
@@ -123,4 +124,37 @@ class ProgressBarStyle {
       {this.backgroundColor = XpColors.white,
       this.trackColor = XpColors.green,
       this.borderColor = XpDefaultThemeColors.outLineColor});
+}
+
+class TitleBarStyle {
+  final Color backgroundColor;
+  final Color foregroundColor;
+  late final Color backgroundShade1;
+  late final Color backgroundShade2;
+  late final Color backgroundShade3;
+  late final Color backgroundShade4;
+  late final Color backgroundShade5;
+
+  TitleBarStyle(
+      {this.backgroundColor = XpColors.moonBlue,
+      this.foregroundColor = XpColors.white}) {
+    final HSLColor color = HSLColor.fromColor(backgroundColor);
+    backgroundShade1 = color
+        .withHue(color.hue - 11)
+        .withSaturation(color.saturation - 0.04)
+        .toColor();
+    backgroundShade2 = color
+        .withHue(color.hue + 3)
+        .withLightness(color.lightness - 0.07)
+        .toColor();
+    backgroundShade3 = color
+        .withHue(color.hue + 4)
+        .withLightness(color.lightness - 0.07)
+        .toColor();
+    backgroundShade4 = color.withHue(color.hue - 4).toColor();
+    backgroundShade5 = color
+        .withHue(color.hue + 7)
+        .withLightness(color.lightness - 0.16)
+        .toColor();
+  }
 }
