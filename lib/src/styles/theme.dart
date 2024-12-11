@@ -37,6 +37,7 @@ class XpThemeData with Diagnosticable {
   late final ButtonStyle? buttonStyle;
   final ProgressBarStyle progressBarStyle;
   final TitleBarStyle titleBarStyle;
+  final TextboxStyle textBoxStyle;
 
   static const Color _lightBackgroundDefault = Color(0xFFF8F8F8);
 
@@ -47,9 +48,12 @@ class XpThemeData with Diagnosticable {
       ButtonStyle? buttonStyle,
       this.progressBarStyle = const ProgressBarStyle(),
       this.textColor = XpDefaultThemeColors.textColor,
+      TextboxStyle? textBoxStyle,
       TitleBarStyle? titleBarStyle})
       : titleBarStyle =
-            titleBarStyle ?? TitleBarStyle(backgroundColor: accentColor) {
+            titleBarStyle ?? TitleBarStyle(backgroundColor: accentColor),
+        textBoxStyle = textBoxStyle ??
+            TextboxStyle(textStyle: TextStyle(color: textColor)) {
     final HSLColor hslColor = HSLColor.fromColor(accentColor);
     lightAccentColor = hslColor.withLightness(0.9).toColor();
     if (buttonStyle == null) {
@@ -156,4 +160,17 @@ class TitleBarStyle {
         .withLightness(color.lightness - 0.16)
         .toColor();
   }
+}
+
+class TextboxStyle {
+  final Color borderColor;
+  final Color backgroundColor;
+  final TextStyle textStyle;
+  final double height;
+
+  const TextboxStyle(
+      {this.backgroundColor = XpColors.white,
+      this.borderColor = XpDefaultThemeColors.textBoxOutlineColor,
+      this.height = 23,
+      this.textStyle = const TextStyle()});
 }

@@ -24,4 +24,5 @@ class XpDefaultThemeColors {
   static const Color outLineColor = Color(0xff686868);
   static const Color textColor = Color(0xff222222);
   static const Color diabledTextColor = Color(0x4B101010);
+  static const Color textBoxOutlineColor = Color(0xff7f9db9);
 }
