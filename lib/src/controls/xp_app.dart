@@ -52,7 +52,6 @@ class XpApp extends StatefulWidget {
       this.localeResolutionCallback,
       this.supportedLocales = const <Locale>[
         Locale('en', 'US'),
-        Locale('es', 'ES')
       ],
       this.showPerformanceOverlay = false,
       this.checkerboardRasterCacheImages = false,
@@ -189,7 +188,7 @@ class _XpAppState extends State<XpApp> {
       widget.routerDelegate != null || widget.routerConfig != null;
 
   m.ThemeData get mTheme => m.ThemeData(
-    fontFamily: 'Trebuchet',
+    fontFamily: 'MS',
       colorScheme: m.ColorScheme.fromSeed(
           seedColor: widget.theme?.accentColor ?? XpColors.moonBlue));
 

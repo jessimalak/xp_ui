@@ -67,7 +67,10 @@ class TitleBar extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: const TextStyle(color: XpColors.white, fontSize: 13),
+                  style: TextStyle(
+                      color: style.foregroundColor,
+                      fontSize: 13,
+                      fontFamily: 'Trebuchet'),
                 ),
               ],
             ),

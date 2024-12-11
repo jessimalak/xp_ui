@@ -50,7 +50,6 @@ class XpThemeData with Diagnosticable {
       TitleBarStyle? titleBarStyle})
       : titleBarStyle =
             titleBarStyle ?? TitleBarStyle(backgroundColor: accentColor) {
-    print('theme Data');
     final HSLColor hslColor = HSLColor.fromColor(accentColor);
     lightAccentColor = hslColor.withLightness(0.9).toColor();
     if (buttonStyle == null) {
