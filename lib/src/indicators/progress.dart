@@ -49,7 +49,7 @@ class ProgressBar extends StatelessWidget {
                   strokeAlign: BorderSide.strokeAlignOutside),
               borderRadius: const BorderRadius.all(Radius.circular(3))),
           child: value == null
-              ? _ProgressUndeterminatedBarWidget()
+              ? _ProgressIndeterminatedBarWidget()
               : CustomPaint(
                   painter: _ProgressDeterminatedBarPainter(
                     value!,
@@ -128,14 +128,14 @@ class _ProgressDeterminatedBarPainter extends CustomPainter {
       old.value != value;
 }
 
-class _ProgressUndeterminatedBarWidget extends StatefulWidget {
+class _ProgressIndeterminatedBarWidget extends StatefulWidget {
   @override
-  State<_ProgressUndeterminatedBarWidget> createState() =>
-      _ProgressUndeterminatedBarWidgetState();
+  State<_ProgressIndeterminatedBarWidget> createState() =>
+      _ProgressIndeterminatedBarWidgetState();
 }
 
-class _ProgressUndeterminatedBarWidgetState
-    extends State<_ProgressUndeterminatedBarWidget>
+class _ProgressIndeterminatedBarWidgetState
+    extends State<_ProgressIndeterminatedBarWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
@@ -152,7 +152,7 @@ class _ProgressUndeterminatedBarWidgetState
   }
 
   @override
-  void didUpdateWidget(covariant _ProgressUndeterminatedBarWidget oldWidget) {
+  void didUpdateWidget(covariant _ProgressIndeterminatedBarWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!_controller.isAnimating) _controller.repeat();
   }
@@ -174,7 +174,7 @@ class _ProgressUndeterminatedBarWidgetState
           lastValue = _controller.value;
           if (deltaValue < 0) deltaValue++; //
           return CustomPaint(
-            painter: _ProgressUndeterminatedBarPainter(
+            painter: _ProgressIndeterminatedBarPainter(
               p1: p1,
               idle: idle,
               cycle: cycle,
@@ -194,8 +194,8 @@ class _ProgressUndeterminatedBarWidgetState
   }
 }
 
-class _ProgressUndeterminatedBarPainter extends CustomPainter {
-  _ProgressUndeterminatedBarPainter({
+class _ProgressIndeterminatedBarPainter extends CustomPainter {
+  _ProgressIndeterminatedBarPainter({
     required this.p1,
     required this.idle,
     required this.cycle,
@@ -247,15 +247,6 @@ class _ProgressUndeterminatedBarPainter extends CustomPainter {
           paint);
     }
 
-    // background line
-    drawLine(
-      Offset(0, size.height),
-    );
-
-    // The math below is cortesy of raitonuberu:
-    // https://gist.github.com/raitonoberu/21dacaee725806b60ddb45ec68147d30
-    // https://github.com/raitonoberu
-
     void update() {
       onUpdate([p1, idleFrames, cycle, idle]);
     }
@@ -287,5 +278,5 @@ class _ProgressUndeterminatedBarPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _ProgressUndeterminatedBarPainter old) => true;
+  bool shouldRepaint(covariant _ProgressIndeterminatedBarPainter old) => true;
 }
