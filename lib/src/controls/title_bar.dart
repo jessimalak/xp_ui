@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'package:window_manager/window_manager.dart' hide TitleBarStyle;
 import 'package:xp_ui/src/styles/colors.dart';
 import 'package:xp_ui/xp_ui.dart';
 
@@ -13,6 +14,9 @@ class TitleBar extends StatelessWidget {
   final bool showMinimizeButton;
   final bool showHelpButton;
   final VoidCallback? onHelpButtonPressed;
+  bool get _isDesktop =>
+      Platform.isLinux || Platform.isMacOS || Platform.isWindows;
+
   const TitleBar(this.title,
       {super.key,
       this.showCloseButton = true,
@@ -20,6 +24,8 @@ class TitleBar extends StatelessWidget {
       this.showMinimizeButton = true,
       this.showHelpButton = false,
       this.onHelpButtonPressed});
+
+  static Future<bool> _emptyFuture() async => false;
 
   @override
   Widget build(BuildContext context) {
@@ -75,16 +81,36 @@ class TitleBar extends StatelessWidget {
                 if (showMinimizeButton)
                   TitleBarActionButton(
                     icon: ActionButtonIcon.minimize,
-                    onPressed: () {},
+                    onPressed: () {
+                      if (!_isDesktop) return;
+                      windowManager.minimize();
+                    },
                   ),
                 if (showMaximizeButton)
-                  TitleBarActionButton(
-                    icon: ActionButtonIcon.maximize,
-                    onPressed: () {},
+                  FutureBuilder(
+                    builder: (context, value) {
+                      return TitleBarActionButton(
+                        icon: !(value.data ?? true)
+                            ? ActionButtonIcon.maximize
+                            : ActionButtonIcon.maximized,
+                        onPressed: () async {
+                          if (!_isDesktop) return;
+                          if (!(value.data ?? true)) {
+                            await windowManager.maximize();
+                          } else {
+                            await windowManager.unmaximize();
+                          }
+                        },
+                      );
+                    },
+                    future: !_isDesktop
+                        ? _emptyFuture()
+                        : windowManager.isMaximized(),
                   ),
                 if (showCloseButton)
                   XpCloseButton(
                     onPressed: () {
+                      if (!_isDesktop) return;
                       SystemChannels.platform
                           .invokeMethod('SystemNavigator.pop');
                     },
