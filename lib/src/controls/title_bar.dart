@@ -13,6 +13,9 @@ class TitleBar extends StatefulWidget {
   final bool showMaximizeButton;
   final bool showMinimizeButton;
   final bool showHelpButton;
+  /// if true allow close button close the app, if false pop the current page
+  final bool canCloseWindow;
+  final bool canDragWindow;
   final VoidCallback? onHelpButtonPressed;
   const TitleBar(this.title,
       {super.key,
@@ -20,7 +23,26 @@ class TitleBar extends StatefulWidget {
       this.showMaximizeButton = true,
       this.showMinimizeButton = true,
       this.showHelpButton = false,
+      this.canCloseWindow = false,
+      this.canDragWindow = false,
       this.onHelpButtonPressed});
+
+  const TitleBar.window(this.title,
+      {super.key,
+      this.showMaximizeButton = true,
+      this.showMinimizeButton = true,
+      this.showHelpButton = false,
+      this.onHelpButtonPressed})
+      : canCloseWindow = true,
+        showCloseButton = true,
+        canDragWindow = true;
+
+  const TitleBar.dialog(this.title,
+      {super.key, this.showCloseButton = true, this.showHelpButton = false, this.onHelpButtonPressed})
+      : canCloseWindow = false,
+        canDragWindow = false,
+        showMaximizeButton = false,
+        showMinimizeButton = false;
 
   @override
   State<TitleBar> createState() => _TitleBarState();
@@ -58,6 +80,17 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
   Widget build(BuildContext context) {
     final style = XpTheme.of(context).titleBarStyle;
     final HSLColor color = HSLColor.fromColor(style.backgroundColor);
+    final Widget titleWidget = Row(
+                  children: [
+                    SizedBox(
+                      width: Platform.isMacOS ? 72 : 6,
+                    ),
+                    Text(
+                      widget.title,
+                      style: TextStyle(color: style.foregroundColor, fontSize: 13, fontFamily: 'Trebuchet'),
+                    ),
+                  ],
+                );
     return DecoratedBox(
       decoration: BoxDecoration(
           border: Border(
@@ -83,23 +116,13 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
               end: Alignment.bottomCenter,
               stops: const [0.03, .08, .40, .88, .93, .95, .96, 1])),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 3, 5, 3),
+        padding: const EdgeInsets.fromLTRB(0, 4, 6, 4),
         child: Row(
           children: [
             Expanded(
-              child: DragToMoveArea(
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: Platform.isMacOS ? 72 : 3,
-                    ),
-                    Text(
-                      widget.title,
-                      style: TextStyle(color: style.foregroundColor, fontSize: 13, fontFamily: 'Trebuchet'),
-                    ),
-                  ],
-                ),
-              ),
+              child: widget.canDragWindow ? DragToMoveArea(
+                child: titleWidget
+              ) : titleWidget,
             ),
             Row(
               children: [
@@ -130,10 +153,12 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
                   ),
                 if (widget.showCloseButton)
                   XpCloseButton(
-                    onPressed: () {
-                      if (!_isDesktop) return;
-                      SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                    },
+                    onPressed: !widget.canCloseWindow
+                        ? null
+                        : () {
+                            if (!_isDesktop) return;
+                            SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                          },
                   )
               ],
             )
