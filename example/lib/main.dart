@@ -115,11 +115,11 @@ class _MyHomePageState extends State<MyHomePage> {
           const SizedBox(
             height: 16,
           ),
-          const Textbox(labelWidget: Text('Label top', style: TextStyle(color: Colors.red),),),
+          const Textbox(labelWidget: Text('Label top widget'),),
            const SizedBox(
-            height: 56,
+            height: 16,
           ),
-          const Textbox(labelWidget: Text('Label left'), labelPosition: TextboxLabelPosition.left,),
+          const Textbox(labelText: 'Label left Text', labelPosition: TextboxLabelPosition.left,),
         ],
       ),
       floatingActionButton: FloatingActionButton(
