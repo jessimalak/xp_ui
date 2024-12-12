@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart' as m;
+import 'package:xp_ui/src/layout/scrollbar.dart';
 import 'package:xp_ui/src/styles/colors.dart';
 import 'package:xp_ui/src/styles/theme.dart';
 
@@ -180,31 +181,36 @@ class _XpAppState extends State<XpApp> {
 
   @override
   Widget build(BuildContext context) {
-    return HeroControllerScope(
-        controller: _heroController, child: _builder(context, widget.home));
+    return HeroControllerScope(controller: _heroController, child: _builder(context, widget.home));
   }
 
-  bool get _usesRouter =>
-      widget.routerDelegate != null || widget.routerConfig != null;
+  bool get _usesRouter => widget.routerDelegate != null || widget.routerConfig != null;
 
   m.ThemeData get mTheme => m.ThemeData(
-    fontFamily: 'MS',
+      fontFamily: 'MS',
+      scrollbarTheme: m.ScrollbarThemeData(
+          thumbVisibility: const WidgetStatePropertyAll(true),
+          trackColor: const WidgetStatePropertyAll(XpColors.white),
+          trackVisibility: const WidgetStatePropertyAll(true),
+          thickness: const WidgetStatePropertyAll(14),
+          radius: const Radius.circular(3),
+          thumbColor: WidgetStatePropertyAll(widget.theme?.lightAccentColor)),
       colorScheme: m.ColorScheme.fromSeed(
           seedColor: widget.theme?.accentColor ?? XpColors.moonBlue, surface: widget.theme?.backgroundColor));
 
   Widget _xpBuilder(BuildContext context, Widget? child) {
+    final theme = widget.theme ?? XpThemeData();
     return XpTheme(
-        data: widget.theme ?? XpThemeData(),
-        child: widget.builder != null
-            ? Builder(
-                builder: (context) => Overlay(
-                      initialEntries: [
-                        OverlayEntry(
-                            builder: (context) =>
-                                widget.builder!(context, child))
-                      ],
-                    ))
-            : child ?? const SizedBox.shrink());
+        data: theme,
+        child: DefaultTextStyle(
+          style: TextStyle(color: theme.textColor, fontSize: 12),
+          child: widget.builder != null
+              ? Builder(
+                  builder: (context) => Overlay(
+                        initialEntries: [OverlayEntry(builder: (context) => widget.builder!(context, child))],
+                      ))
+              : child ?? const SizedBox.shrink(),
+        ));
   }
 
   Widget _builder(BuildContext context, Widget? child) {
@@ -232,7 +238,7 @@ class _XpAppState extends State<XpApp> {
         shortcuts: widget.shortcuts,
         actions: widget.actions,
         theme: mTheme,
-        // scrollBehavior: widget.scr,
+        scrollBehavior: const XpScrollBehavior(),
       );
     }
 
@@ -259,7 +265,16 @@ class _XpAppState extends State<XpApp> {
       shortcuts: widget.shortcuts,
       actions: widget.actions,
       theme: mTheme,
-      // scrollBehavior: widget.scr,
+      scrollBehavior: const XpScrollBehavior(),
     );
+  }
+}
+
+class XpScrollBehavior extends ScrollBehavior {
+  const XpScrollBehavior();
+
+  @override
+  Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
+    return XpScrollbar(controller: details.controller, child: child);
   }
 }

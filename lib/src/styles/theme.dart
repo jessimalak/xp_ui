@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:xp_ui/src/styles/colors.dart';
+import 'package:xp_ui/src/styles/scrollbar_theme.dart';
 
 class XpTheme extends StatelessWidget {
   const XpTheme({super.key, required this.data, required this.child});
@@ -13,8 +14,7 @@ class XpTheme extends StatelessWidget {
   }
 
   static XpThemeData of(BuildContext context) {
-    final _InheritedXpTheme? inheritedXpTheme =
-        context.dependOnInheritedWidgetOfExactType<_InheritedXpTheme>();
+    final _InheritedXpTheme? inheritedXpTheme = context.dependOnInheritedWidgetOfExactType<_InheritedXpTheme>();
     return inheritedXpTheme?.theme.data ?? XpThemeData();
   }
 }
@@ -24,8 +24,7 @@ class _InheritedXpTheme extends InheritedWidget {
 
   const _InheritedXpTheme({required this.theme, required super.child});
   @override
-  bool updateShouldNotify(covariant _InheritedXpTheme old) =>
-      theme.data != old.theme.data;
+  bool updateShouldNotify(covariant _InheritedXpTheme old) => theme.data != old.theme.data;
 }
 
 class XpThemeData with Diagnosticable {
@@ -38,6 +37,7 @@ class XpThemeData with Diagnosticable {
   final ProgressBarStyle progressBarStyle;
   final TitleBarStyle titleBarStyle;
   final TextboxStyle textBoxStyle;
+  final ScrollbarTheme scrollbarTheme;
 
   XpThemeData(
       {this.accentColor = XpColors.moonBlue,
@@ -47,22 +47,19 @@ class XpThemeData with Diagnosticable {
       this.progressBarStyle = const ProgressBarStyle(),
       this.textColor = XpDefaultThemeColors.textColor,
       TextboxStyle? textBoxStyle,
-      TitleBarStyle? titleBarStyle})
-      : titleBarStyle =
-            titleBarStyle ?? TitleBarStyle(backgroundColor: accentColor),
-        textBoxStyle = textBoxStyle ??
-            TextboxStyle(textStyle: TextStyle(color: textColor)) {
+      TitleBarStyle? titleBarStyle,
+      ScrollbarTheme? scrollbarTheme})
+      : titleBarStyle = titleBarStyle ?? TitleBarStyle(backgroundColor: accentColor),
+        textBoxStyle = textBoxStyle ?? TextboxStyle(textStyle: TextStyle(color: textColor)),
+        scrollbarTheme = scrollbarTheme ?? ScrollbarTheme(thumbColor: XpDefaultThemeColors.scrollbarThumbColor) {
     final HSLColor hslColor = HSLColor.fromColor(accentColor);
     lightAccentColor = hslColor.withLightness(0.9).toColor();
     if (buttonStyle == null) {
       this.buttonStyle = ButtonStyle(
           hoverColorBottom: activeColor,
-          hoverColorLeft:
-              ButtonStyle.toPositionalHoverColor(activeColor, Position.left),
-          hoverColorTop:
-              ButtonStyle.toPositionalHoverColor(activeColor, Position.top),
-          hoverColorRight:
-              ButtonStyle.toPositionalHoverColor(activeColor, Position.right));
+          hoverColorLeft: ButtonStyle.toPositionalHoverColor(activeColor, Position.left),
+          hoverColorTop: ButtonStyle.toPositionalHoverColor(activeColor, Position.top),
+          hoverColorRight: ButtonStyle.toPositionalHoverColor(activeColor, Position.right));
     }
   }
 }
@@ -75,8 +72,7 @@ class ButtonStyle {
   final Color hoverColorTop;
   final Color hoverColorRight;
 
-  static const BoxConstraints _defaultButtonConstrains =
-      BoxConstraints(minHeight: 23, minWidth: 75);
+  static const BoxConstraints _defaultButtonConstrains = BoxConstraints(minHeight: 23, minWidth: 75);
 
   const ButtonStyle(
       {this.borderColor = XpColors.darkBlue,
@@ -92,17 +88,9 @@ class ButtonStyle {
       case Position.left:
         return hsl.withSaturation(0.95).withLightness(.68).toColor();
       case Position.top:
-        return hsl
-            .withHue(hsl.hue + 1)
-            .withSaturation(0.97)
-            .withLightness(0.76)
-            .toColor();
+        return hsl.withHue(hsl.hue + 1).withSaturation(0.97).withLightness(0.76).toColor();
       case Position.right:
-        return hsl
-            .withHue(hsl.hue + 1)
-            .withSaturation(0.98)
-            .withLightness(0.85)
-            .toColor();
+        return hsl.withHue(hsl.hue + 1).withSaturation(0.98).withLightness(0.85).toColor();
       default:
     }
     return color;
@@ -136,27 +124,13 @@ class TitleBarStyle {
   late final Color backgroundShade4;
   late final Color backgroundShade5;
 
-  TitleBarStyle(
-      {this.backgroundColor = XpColors.moonBlue,
-      this.foregroundColor = XpColors.white}) {
+  TitleBarStyle({this.backgroundColor = XpColors.moonBlue, this.foregroundColor = XpColors.white}) {
     final HSLColor color = HSLColor.fromColor(backgroundColor);
-    backgroundShade1 = color
-        .withHue(color.hue - 11)
-        .withSaturation(color.saturation - 0.04)
-        .toColor();
-    backgroundShade2 = color
-        .withHue(color.hue + 3)
-        .withLightness(color.lightness - 0.07)
-        .toColor();
-    backgroundShade3 = color
-        .withHue(color.hue + 4)
-        .withLightness(color.lightness - 0.07)
-        .toColor();
+    backgroundShade1 = color.withHue(color.hue - 11).withSaturation(color.saturation - 0.04).toColor();
+    backgroundShade2 = color.withHue(color.hue + 3).withLightness(color.lightness - 0.07).toColor();
+    backgroundShade3 = color.withHue(color.hue + 4).withLightness(color.lightness - 0.07).toColor();
     backgroundShade4 = color.withHue(color.hue - 4).toColor();
-    backgroundShade5 = color
-        .withHue(color.hue + 7)
-        .withLightness(color.lightness - 0.16)
-        .toColor();
+    backgroundShade5 = color.withHue(color.hue + 7).withLightness(color.lightness - 0.16).toColor();
   }
 }
 

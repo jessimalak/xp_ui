@@ -26,4 +26,5 @@ class XpDefaultThemeColors {
   static const Color textColor = Color(0xff222222);
   static const Color diabledTextColor = Color(0x4B101010);
   static const Color textBoxOutlineColor = Color(0xff7f9db9);
+  static const Color scrollbarThumbColor = Color(0xffc8d6fb);
 }
