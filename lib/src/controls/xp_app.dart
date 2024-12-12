@@ -190,7 +190,7 @@ class _XpAppState extends State<XpApp> {
   m.ThemeData get mTheme => m.ThemeData(
     fontFamily: 'MS',
       colorScheme: m.ColorScheme.fromSeed(
-          seedColor: widget.theme?.accentColor ?? XpColors.moonBlue));
+          seedColor: widget.theme?.accentColor ?? XpColors.moonBlue, surface: widget.theme?.backgroundColor));
 
   Widget _xpBuilder(BuildContext context, Widget? child) {
     return XpTheme(

@@ -39,12 +39,10 @@ class XpThemeData with Diagnosticable {
   final TitleBarStyle titleBarStyle;
   final TextboxStyle textBoxStyle;
 
-  static const Color _lightBackgroundDefault = Color(0xFFF8F8F8);
-
   XpThemeData(
       {this.accentColor = XpColors.moonBlue,
       this.activeColor = XpColors.orange,
-      this.backgroundColor = _lightBackgroundDefault,
+      this.backgroundColor = XpColors.windowBackground,
       ButtonStyle? buttonStyle,
       this.progressBarStyle = const ProgressBarStyle(),
       this.textColor = XpDefaultThemeColors.textColor,
