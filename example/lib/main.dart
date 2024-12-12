@@ -9,8 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
     await windowManager.ensureInitialized();
-    WindowOptions windowOptions =
-        const WindowOptions(titleBarStyle: TitleBarStyle.hidden);
+    WindowOptions windowOptions = const WindowOptions(titleBarStyle: TitleBarStyle.hidden);
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
       await windowManager.focus();
@@ -77,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const TitleBar(
+          const TitleBar.window(
             'Example',
             showHelpButton: true,
           ),
@@ -86,7 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Text('$_counter'),
           Button(
-            onPressed: _incrementCounter,
+            onPressed: () {
+              showXpDialog(context: context, builder: (context) => const XpAlertDialog(title: 'alerta'));
+            },
             child: const Text('Xp button'),
           ),
           const SizedBox(
@@ -115,18 +116,19 @@ class _MyHomePageState extends State<MyHomePage> {
           const SizedBox(
             height: 16,
           ),
-          const Textbox(labelWidget: Text('Label top widget'),),
-           const SizedBox(
+          const Textbox(
+            labelWidget: Text('Label top widget'),
+          ),
+          const SizedBox(
             height: 16,
           ),
-          const Textbox(labelText: 'Label left Text', labelPosition: TextboxLabelPosition.left,),
+          const Textbox(
+            labelText: 'Label left Text',
+            labelPosition: TextboxLabelPosition.left,
+          ),
+          Expanded(child: ListView.builder(itemCount: 64, itemBuilder: (context, i) => Text('Item $i')))
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
