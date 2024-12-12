@@ -55,7 +55,7 @@ class _TextboxState extends State<Textbox> {
     if (widget.labelPosition == TextboxLabelPosition.top) return;
     final object = _labelKey.currentContext?.findRenderObject() as RenderBox?;
     if (object == null) return;
-    labelWith = object.size.width + 8;
+    labelWith = object.size.width;
     setState(() {});
   }
 
