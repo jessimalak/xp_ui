@@ -32,7 +32,9 @@ class XpThemeData with Diagnosticable {
   late final Color lightAccentColor;
   final Color activeColor;
   final Color backgroundColor;
+  final Color controlsBackgroundColor;
   final Color textColor;
+  final Color borderColor;
   late final ButtonStyle? buttonStyle;
   final ProgressBarStyle progressBarStyle;
   final TitleBarStyle titleBarStyle;
@@ -43,9 +45,11 @@ class XpThemeData with Diagnosticable {
       {this.accentColor = XpColors.moonBlue,
       this.activeColor = XpColors.orange,
       this.backgroundColor = XpColors.windowBackground,
+      this.controlsBackgroundColor = XpColors.white,
       ButtonStyle? buttonStyle,
       this.progressBarStyle = const ProgressBarStyle(),
       this.textColor = XpDefaultThemeColors.textColor,
+      this.borderColor = XpDefaultThemeColors.outLineColor,
       TextboxStyle? textBoxStyle,
       TitleBarStyle? titleBarStyle,
       ScrollbarTheme? scrollbarTheme})
