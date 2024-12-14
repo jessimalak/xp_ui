@@ -9,7 +9,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
     await windowManager.ensureInitialized();
-    WindowOptions windowOptions = const WindowOptions(titleBarStyle: TitleBarStyle.hidden);
+    WindowOptions windowOptions =
+        const WindowOptions(titleBarStyle: TitleBarStyle.hidden);
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
       await windowManager.focus();
@@ -45,6 +46,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   late final Timer _timer;
+  final XpTabViewController _tabViewController = XpTabViewController(length: 2);
 
   void _incrementCounter() {
     if (_counter == 100) {
@@ -86,7 +88,9 @@ class _MyHomePageState extends State<MyHomePage> {
           Text('$_counter'),
           Button(
             onPressed: () {
-              showXpDialog(context: context, builder: (context) => const XpAlertDialog(title: 'alerta'));
+              showXpDialog(
+                  context: context,
+                  builder: (context) => const XpAlertDialog(title: 'alerta'));
             },
             child: const Text('Xp button'),
           ),
@@ -126,7 +130,22 @@ class _MyHomePageState extends State<MyHomePage> {
             labelText: 'Label left Text',
             labelPosition: TextboxLabelPosition.left,
           ),
-          Expanded(child: ListView.builder(itemCount: 64, itemBuilder: (context, i) => Text('Item $i')))
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                    child: ListView.builder(
+                        itemCount: 64,
+                        itemBuilder: (context, i) => Text('Item $i'))),
+                Expanded(
+                  child: XpTabView(
+                      controller: _tabViewController,
+                      tabs: [XpTab(label: 'label 1'), XpTab(label: 'label 2')],
+                      children: [Text('contenido'), Text('contenido 2')]),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
