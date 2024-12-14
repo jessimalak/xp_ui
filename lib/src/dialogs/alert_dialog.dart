@@ -9,7 +9,7 @@ const _kDefaultDialogConstraints = BoxConstraints(
 
 const double _kDefaultBorderWidth = 3;
 
-enum AlerType { error, success, warning, none }
+enum AlertType { error, success, warning, info, question,none }
 
 class XpAlertDialog extends StatelessWidget {
   const XpAlertDialog(
@@ -18,20 +18,22 @@ class XpAlertDialog extends StatelessWidget {
       this.content,
       this.actions = const [],
       this.showCloseButton = true,
-      this.alerType = AlerType.none});
+      this.alerType = AlertType.none});
   final String title;
   final Widget? content;
   final List<Button> actions;
   final bool showCloseButton;
-  final AlerType alerType;
+  final AlertType alerType;
 
   @override
   Widget build(BuildContext context) {
     final theme = XpTheme.of(context);
-    final child = content ??
-        const SizedBox(
-          height: 56,
-        );
+    final child = Flexible(
+      child: content ??
+          const SizedBox(
+            height: 56,
+          ),
+    );
     return Dialog(
       backgroundColor: theme.backgroundColor,
       shape: const RoundedRectangleBorder(
@@ -64,15 +66,16 @@ class XpAlertDialog extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    alerType == AlerType.none
+                    alerType == AlertType.none
                         ? child
                         : Row(mainAxisSize: MainAxisSize.min,
                             children: [
                               SystemIcon(
                                   icon: switch (alerType) {
-                                AlerType.error => XpSystemIcons.error,
-                                AlerType.warning => XpSystemIcons.warning,
-                                AlerType.success => XpSystemIcons.shieldSuccess,
+                                AlertType.error => XpSystemIcons.error,
+                                AlertType.warning => XpSystemIcons.warning,
+                                AlertType.success => XpSystemIcons.shieldSuccess,
+                                AlertType.question => XpSystemIcons.question,
                                 _ => XpSystemIcons.info1
                               }),
                               const SizedBox(
