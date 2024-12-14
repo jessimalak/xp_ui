@@ -82,9 +82,12 @@ class _MyHomePageState extends State<MyHomePage> {
             'Example',
             showHelpButton: true,
           ),
-          const SizedBox(height: 16,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          const SizedBox(
+            height: 16,
+          ),
+          Wrap(
+            spacing: 16,
+            runSpacing: 16,
             children: [
               Button(
                 onPressed: () {
@@ -92,7 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       context: context,
                       builder: (context) => XpAlertDialog(
                             title: 'Simple Alert',
-                            content: const Text('This is a simple alert dialog'),
+                            content:
+                                const Text('This is a simple alert dialog'),
                             actions: [
                               Button(
                                 child: const Text('Cancel'),
@@ -117,8 +121,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       context: context,
                       builder: (context) => XpAlertDialog(
                             title: 'Warning Alert',
-                            alerType: AlerType.warning,
-                            content: const Text('This is a warning alert dialog'),
+                            alerType: AlertType.warning,
+                            content:
+                                const Text('This is a warning alert dialog'),
                             actions: [
                               Button(
                                 child: const Text('Cancel'),
@@ -143,8 +148,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       context: context,
                       builder: (context) => XpAlertDialog(
                             title: 'Error Alert',
-                            alerType: AlerType.error,
-                            content: const Text('This is an error alert dialog'),
+                            alerType: AlertType.error,
+                            content:
+                                const Text('This is an error alert dialog'),
                             actions: [
                               Button(
                                 child: const Text('Cancel'),
@@ -162,6 +168,59 @@ class _MyHomePageState extends State<MyHomePage> {
                           ));
                 },
                 child: const Text('show error alert'),
+              ),
+              Button(
+                onPressed: () {
+                  showXpDialog(
+                      context: context,
+                      builder: (context) => XpAlertDialog(
+                            title: 'Info Alert',
+                            alerType: AlertType.info,
+                            content: const Text('This is an info alert dialog'),
+                            actions: [
+                              Button(
+                                child: const Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              Button(
+                                child: const Text('Accept'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              )
+                            ],
+                          ));
+                },
+                child: const Text('show info alert'),
+              ),
+              Button(
+                onPressed: () {
+                  showXpDialog(
+                      context: context,
+                      builder: (context) => XpAlertDialog(
+                            title: 'Question Alert',
+                            alerType: AlertType.question,
+                            content:
+                                const Text('This is an question alert dialog'),
+                            actions: [
+                              Button(
+                                child: const Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              Button(
+                                child: const Text('Accept'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              )
+                            ],
+                          ));
+                },
+                child: const Text('show question alert'),
               ),
               const Button(
                 onPressed: null,
