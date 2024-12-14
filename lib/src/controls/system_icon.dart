@@ -44,6 +44,7 @@ enum XpSystemIcons {
   firewall,
   folderChat,
   folderClose,
+  folderCopy,
   folderDisc,
   folderDocument,
   folderFont,
@@ -57,8 +58,10 @@ enum XpSystemIcons {
   folderVideo,
   info1,
   info2,
+  internet,
   joystick,
   keyboard,
+  lan,
   localNetwork,
   mouse,
   mute,
@@ -89,4 +92,5 @@ enum XpSystemIcons {
   videoCamera,
   volume,
   warning,
+  wlan
 }
