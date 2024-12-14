@@ -30,10 +30,10 @@ class XpDialogRoute<T> extends PopupRoute<T> {
   Curve get barrierCurve => Curves.linear;
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 450);
+  Duration get transitionDuration => const Duration(milliseconds: 1);
 
   @override
-  Duration get reverseTransitionDuration => const Duration(milliseconds: 120);
+  Duration get reverseTransitionDuration => const Duration(milliseconds: 1);
 
   @override
   Widget buildTransitions(

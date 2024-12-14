@@ -4,7 +4,7 @@ import 'package:xp_ui/xp_ui.dart';
 
 const _kDefaultDialogConstraints = BoxConstraints(
   minWidth: 260,
-  maxWidth: 500,
+  maxWidth: 260,
 );
 
 const double _kDefaultBorderWidth = 3;
