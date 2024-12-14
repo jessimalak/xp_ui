@@ -25,6 +25,7 @@ flutter:
     - assets/action_icons/maximized_icon.png
     - assets/action_icons/minimize_icon.png
     - assets/action_icons/help_icon.png
+    - assets/system_icons/
 
   fonts:
     - family: Trebuchet

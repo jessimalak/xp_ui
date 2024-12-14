@@ -11,3 +11,4 @@ export './src/dialogs/alert_dialog.dart';
 export './src/layout/tab_view/tab_view.dart';
 export './src/layout/tab_view/tab.dart';
 export './src/layout/tab_view/tab_view_controller.dart';
+export './src/controls/system_icon.dart';
