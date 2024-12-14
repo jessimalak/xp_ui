@@ -83,7 +83,7 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
     final Widget titleWidget = Row(
                   children: [
                     SizedBox(
-                      width: Platform.isMacOS ? 72 : 6,
+                      width: Platform.isMacOS && widget.canDragWindow ? 72 : 6,
                     ),
                     Text(
                       widget.title,
