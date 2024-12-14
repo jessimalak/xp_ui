@@ -82,28 +82,97 @@ class _MyHomePageState extends State<MyHomePage> {
             'Example',
             showHelpButton: true,
           ),
-          const Text(
-            'You have pushed the button this many times:',
-          ),
-          Text('$_counter'),
-          Button(
-            onPressed: () {
-              showXpDialog(
-                  context: context,
-                  builder: (context) => const XpAlertDialog(title: 'alerta'));
-            },
-            child: const Text('Xp button'),
+          const SizedBox(height: 16,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Button(
+                onPressed: () {
+                  showXpDialog(
+                      context: context,
+                      builder: (context) => XpAlertDialog(
+                            title: 'Simple Alert',
+                            content: const Text('This is a simple alert dialog'),
+                            actions: [
+                              Button(
+                                child: const Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              Button(
+                                child: const Text('Accept'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              )
+                            ],
+                          ));
+                },
+                child: const Text('show simple alert'),
+              ),
+              Button(
+                onPressed: () {
+                  showXpDialog(
+                      context: context,
+                      builder: (context) => XpAlertDialog(
+                            title: 'Warning Alert',
+                            alerType: AlerType.warning,
+                            content: const Text('This is a warning alert dialog'),
+                            actions: [
+                              Button(
+                                child: const Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              Button(
+                                child: const Text('Accept'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              )
+                            ],
+                          ));
+                },
+                child: const Text('show warning alert'),
+              ),
+              Button(
+                onPressed: () {
+                  showXpDialog(
+                      context: context,
+                      builder: (context) => XpAlertDialog(
+                            title: 'Error Alert',
+                            alerType: AlerType.error,
+                            content: const Text('This is an error alert dialog'),
+                            actions: [
+                              Button(
+                                child: const Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              Button(
+                                child: const Text('Accept'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              )
+                            ],
+                          ));
+                },
+                child: const Text('show error alert'),
+              ),
+              const Button(
+                onPressed: null,
+                child: Text('Disabled button'),
+              ),
+            ],
           ),
           const SizedBox(
             height: 16,
           ),
-          const Button(
-            onPressed: null,
-            child: Text('Xp button'),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
+          Text('$_counter%'),
           SizedBox(
             width: 600,
             child: ProgressBar(
@@ -141,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: XpTabView(
                       controller: _tabViewController,
                       tabs: [XpTab(label: 'label 1'), XpTab(label: 'label 2')],
-                      children: [Text('contenido'), Text('contenido 2')]),
+                      children: [Text('contenido'), Text('contenido')]),
                 )
               ],
             ),
