@@ -43,7 +43,7 @@ class _TextboxState extends State<Textbox> {
   final FocusNode _node = FocusNode();
   final GlobalKey _labelKey = GlobalKey();
 
-  double labelWith = 0;
+  double labelWidth = 0;
 
   @override
   void initState() {
@@ -55,7 +55,7 @@ class _TextboxState extends State<Textbox> {
     if (widget.labelPosition == TextboxLabelPosition.top) return;
     final object = _labelKey.currentContext?.findRenderObject() as RenderBox?;
     if (object == null) return;
-    labelWith = object.size.width;
+    labelWidth = object.size.width;
     setState(() {});
   }
 
@@ -99,30 +99,32 @@ class _TextboxState extends State<Textbox> {
                         ))
                       : const SizedBox.shrink())),
         ),
-        ConstrainedBox(
-          constraints: BoxConstraints(
-              maxHeight: widget.height ?? theme.height,
-              minHeight: widget.height ?? theme.height,
-              maxWidth: width - labelWith),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-                color: widget.backgroundColor ?? theme.backgroundColor,
-                border: Border.all(color: theme.borderColor)),
-            child: EditableText(
-              controller: widget.controller ?? _controller,
-              focusNode: widget.focusNode ?? _node,
-              style: theme.textStyle,
-              cursorColor: theme.borderColor,
-              backgroundCursorColor: theme.backgroundColor,
-              obscureText: widget.obscureText,
-              maxLines: widget.maxLines,
-              inputFormatters: widget.inputFormatters,
-              autofocus: widget.autofocus,
-              onSubmitted: widget.onSubmitted,
-              onChanged: widget.onChanged,
+        if ((widget.labelText != null || widget.labelWidget != null) &&
+            (labelWidth > 0 || widget.labelPosition == TextboxLabelPosition.top))
+          ConstrainedBox(
+            constraints: BoxConstraints(
+                maxHeight: widget.height ?? theme.height,
+                minHeight: widget.height ?? theme.height,
+                maxWidth: width - labelWidth),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                  color: widget.backgroundColor ?? theme.backgroundColor,
+                  border: Border.all(color: theme.borderColor)),
+              child: EditableText(
+                controller: widget.controller ?? _controller,
+                focusNode: widget.focusNode ?? _node,
+                style: theme.textStyle,
+                cursorColor: theme.borderColor,
+                backgroundCursorColor: theme.backgroundColor,
+                obscureText: widget.obscureText,
+                maxLines: widget.maxLines,
+                inputFormatters: widget.inputFormatters,
+                autofocus: widget.autofocus,
+                onSubmitted: widget.onSubmitted,
+                onChanged: widget.onChanged,
+              ),
             ),
-          ),
-        )
+          )
       ],
     );
   }
