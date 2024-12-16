@@ -78,9 +78,18 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const TitleBar.window(
+          TitleBar.window(
             'Example',
             showHelpButton: true,
+            onHelpButtonPressed: () {
+              showXpDialog(
+                  context: context,
+                  builder: (context) => const XpAlertDialog(
+                        title: 'About',
+                        content: Text('Xp_ui for flutter\nBy Malak;'),
+                        alerType: AlertType.info,
+                      ));
+            },
           ),
           const SizedBox(
             height: 16,
@@ -257,6 +266,18 @@ class _MyHomePageState extends State<MyHomePage> {
           const Textbox(
             labelText: 'Label left Text',
             labelPosition: TextboxLabelPosition.left,
+          ),
+          Row(
+            children: [
+              XpCheckbox(
+                value: true,
+                label: 'checkbox label',
+              ),
+              XpCheckbox(
+                value: false,
+                label: 'checkbox label',
+              ),
+            ],
           ),
           Expanded(
             child: Row(
