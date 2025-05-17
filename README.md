@@ -1,39 +1,57 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# xp_ui
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+Windows Xp UI components for Flutter apps
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
+## Screenshots
+<hr>
+![screenshot of fñutter app window usin xp_ui components](/images/screenshot.png)
 
 TODO: List what your package can do. Maybe include images, gifs, or videos.
 
-## Getting started
+## Components
+<hr>
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
+### XpApp
+Required to load all Xp styles, is compatible with standart flutter material Widgets.
 ```dart
-const like = 'sample';
+ XpApp(
+    title: 'Flutter Demo',
+    theme: XpThemeData(),
+    debugShowCheckedModeBanner: false,
+    home: const MyHomePage(title: 'Flutter Demo Home Page'),
+);
 ```
 
-## Additional information
+### Button
+![enabled button](images/button/button_enabled.png) ![disabled button](images/button/button_disabled.png)
+```dart
+ Button(
+    child: const Text('Cancel'),
+    onPressed: () {},
+)
+```
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+### ProgressBar
+you can provide a value between 0-100 to show progress, or null to show an indeterminated progress.
+
+![xp style green progress bar](images/progressbar.png)
+
+```dart
+ProgressBar(
+    value: 82.0
+)
+```
+### Checkbox
+![two xp style checkboxes](images/checkbox.png)
+```dart
+XpCheckbox(
+    value: true,
+    label: 'checkbox label',
+    onChanged: (value) {}
+)
+XpCheckbox(
+    value: false,
+    label: 'checkbox label',
+    onChanged: (value) {}
+)
+```
