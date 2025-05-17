@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' show Icons;
 import 'package:flutter/widgets.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_shadow/flutter_inset_shadow.dart';
 import 'package:xp_ui/src/styles/colors.dart';
@@ -12,8 +13,7 @@ class XpCheckbox extends StatefulWidget {
   final bool value;
   final String label;
   final void Function(bool value)? onChanged;
-  const XpCheckbox(
-      {super.key, required this.value, this.onChanged, required this.label});
+  const XpCheckbox({super.key, required this.value, this.onChanged, required this.label});
 
   @override
   State<XpCheckbox> createState() => _XpCheckboxState();
@@ -46,9 +46,7 @@ class _XpCheckboxState extends State<XpCheckbox> {
     const WidgetSurveyor widgetSurveyor = WidgetSurveyor();
     Widget item = Directionality(
       textDirection: directionality,
-      child: DefaultTextStyle(
-          style: style,
-          child: XpCheckbox.defaultItemBuilder(context, widget.label)),
+      child: DefaultTextStyle(style: style, child: XpCheckbox.defaultItemBuilder(context, widget.label)),
     );
     _labelWidth = widgetSurveyor.measureWidget(item).width;
   }
@@ -81,9 +79,7 @@ class _XpCheckboxState extends State<XpCheckbox> {
             ),
             DecoratedBox(
                 decoration: BoxDecoration(
-                    border: Border.all(
-                        strokeAlign: BorderSide.strokeAlignOutside,
-                        color: theme.borderColor),
+                    border: Border.all(strokeAlign: BorderSide.strokeAlignOutside, color: theme.borderColor),
                     gradient: const LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -92,29 +88,29 @@ class _XpCheckboxState extends State<XpCheckbox> {
                   height: _kDefaultCheckboxSize,
                   width: _kDefaultCheckboxSize,
                   child: DecoratedBox(
-                      decoration: BoxDecoration(
-                          boxShadow: _hover
-                              ? [
-                                  BoxShadow(
-                                      inset: true,
-                                      offset: const Offset(-1, 1),
-                                      color: theme.buttonStyle!.hoverColorTop),
-                                  BoxShadow(
-                                      inset: true,
-                                      offset: const Offset(1, 2),
-                                      color:
-                                          theme.buttonStyle!.hoverColorRight),
-                                  BoxShadow(
-                                      inset: true,
-                                      offset: const Offset(-2, 2),
-                                      color: theme.buttonStyle!.hoverColorLeft),
-                                  BoxShadow(
-                                      inset: true,
-                                      offset: const Offset(2, -2),
-                                      color:
-                                          theme.buttonStyle!.hoverColorBottom)
-                                ]
-                              : [])),
+                    decoration: BoxDecoration(
+                        boxShadow: _hover
+                            ? [
+                                BoxShadow(
+                                    inset: true, offset: const Offset(-1, 1), color: theme.buttonStyle!.hoverColorTop),
+                                BoxShadow(
+                                    inset: true, offset: const Offset(1, 2), color: theme.buttonStyle!.hoverColorRight),
+                                BoxShadow(
+                                    inset: true, offset: const Offset(-2, 2), color: theme.buttonStyle!.hoverColorLeft),
+                                BoxShadow(
+                                    inset: true,
+                                    offset: const Offset(2, -2),
+                                    color: theme.buttonStyle!.hoverColorBottom)
+                              ]
+                            : []),
+                    child: widget.value
+                        ? const Icon(
+                            Icons.check,
+                            size: _kDefaultCheckboxSize * 0.9,
+                            color: XpColors.green,
+                          )
+                        : null,
+                  ),
                 )),
             const SizedBox(
               width: _kDefaultSpacing,
