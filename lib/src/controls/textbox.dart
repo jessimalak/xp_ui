@@ -78,54 +78,59 @@ class _TextboxState extends State<Textbox> {
   @override
   Widget build(BuildContext context) {
     final theme = XpTheme.of(context).textBoxStyle;
-    final width = MediaQuery.sizeOf(context).width;
-    return Flex(
-      crossAxisAlignment: widget.labelPosition == TextboxLabelPosition.top
-          ? CrossAxisAlignment.start
-          : CrossAxisAlignment.center,
-      direction: widget.labelPosition == TextboxLabelPosition.top
-          ? Axis.vertical
-          : Axis.horizontal,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 8, bottom: 4),
-          key: _labelKey,
-          child: DefaultTextStyle(
-              style: theme.textStyle,
-              child: widget.labelWidget ??
-                  (widget.labelText != null
-                      ? (Text(
-                          widget.labelText!,
-                        ))
-                      : const SizedBox.shrink())),
-        ),
-        if ((widget.labelText != null || widget.labelWidget != null) &&
-            (labelWidth > 0 || widget.labelPosition == TextboxLabelPosition.top))
-          ConstrainedBox(
-            constraints: BoxConstraints(
-                maxHeight: widget.height ?? theme.height,
-                minHeight: widget.height ?? theme.height,
-                maxWidth: width - labelWidth),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                  color: widget.backgroundColor ?? theme.backgroundColor,
-                  border: Border.all(color: theme.borderColor)),
-              child: EditableText(
-                controller: widget.controller ?? _controller,
-                focusNode: widget.focusNode ?? _node,
-                style: theme.textStyle,
-                cursorColor: theme.borderColor,
-                backgroundCursorColor: theme.backgroundColor,
-                obscureText: widget.obscureText,
-                maxLines: widget.maxLines,
-                inputFormatters: widget.inputFormatters,
-                autofocus: widget.autofocus,
-                onSubmitted: widget.onSubmitted,
-                onChanged: widget.onChanged,
-              ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Flex(
+          crossAxisAlignment: widget.labelPosition == TextboxLabelPosition.top
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.center,
+          direction: widget.labelPosition == TextboxLabelPosition.top
+              ? Axis.vertical
+              : Axis.horizontal,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8, bottom: 4),
+              key: _labelKey,
+              child: DefaultTextStyle(
+                  style: theme.textStyle,
+                  child: widget.labelWidget ??
+                      (widget.labelText != null
+                          ? (Text(
+                              widget.labelText!,
+                            ))
+                          : const SizedBox.shrink())),
             ),
-          )
-      ],
+            if ((widget.labelText != null || widget.labelWidget != null) &&
+                (labelWidth > 0 || widget.labelPosition == TextboxLabelPosition.top))
+              ConstrainedBox(
+                // height: widget.height ?? theme.height,
+                constraints: BoxConstraints(
+                    maxHeight: widget.height ?? theme.height,
+                    minHeight: widget.height ?? theme.height,
+                    maxWidth: constraints.maxWidth
+                     - labelWidth),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: widget.backgroundColor ?? theme.backgroundColor,
+                      border: Border.all(color: theme.borderColor)),
+                  child: EditableText(
+                    controller: widget.controller ?? _controller,
+                    focusNode: widget.focusNode ?? _node,
+                    style: theme.textStyle,
+                    cursorColor: theme.borderColor,
+                    backgroundCursorColor: theme.backgroundColor,
+                    obscureText: widget.obscureText,
+                    maxLines: widget.maxLines,
+                    inputFormatters: widget.inputFormatters,
+                    autofocus: widget.autofocus,
+                    onSubmitted: widget.onSubmitted,
+                    onChanged: widget.onChanged,
+                  ),
+                ),
+              )
+          ],
+        );
+      }
     );
   }
 }
