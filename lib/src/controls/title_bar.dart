@@ -7,7 +7,7 @@ import 'package:window_manager/window_manager.dart' hide TitleBarStyle;
 import 'package:xp_ui/src/styles/colors.dart';
 import 'package:xp_ui/xp_ui.dart';
 
-class TitleBar extends StatefulWidget {
+class TitleBar extends StatefulWidget implements PreferredSizeWidget{
   final String title;
   final bool showCloseButton;
   final bool showMaximizeButton;
@@ -50,6 +50,9 @@ class TitleBar extends StatefulWidget {
 
   @override
   State<TitleBar> createState() => _TitleBarState();
+  
+  @override
+  Size get preferredSize => const Size.fromHeight(32);
 }
 
 class _TitleBarState extends State<TitleBar> with WindowListener {

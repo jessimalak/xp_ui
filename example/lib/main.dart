@@ -74,13 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            TitleBar.window(
+      appBar:  TitleBar.window(
               'Example',
               showHelpButton: true,
               onHelpButtonPressed: () {
@@ -93,6 +87,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         ));
               },
             ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+           
             const SizedBox(
               height: 16,
             ),
