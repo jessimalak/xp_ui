@@ -1,7 +1,7 @@
 name: xp_ui
 description: "Windows XP UI components for Flutter apps."
 version: 0.0.1
-homepage:
+repository: https://github.com/jessimalak/xp_ui
 
 environment:
   sdk: ^3.5.3
