@@ -6,7 +6,6 @@ Windows Xp UI components for Flutter apps, inspired on [flutter95](https://pub.d
 
 ## Screenshots
 
-<hr>
 
 ![screenshot of flutter app window usin xp_ui components](images/screenshot.png)
 
@@ -95,6 +94,7 @@ XpCheckbox(
 #### Textbox
 
 The label can be a String or a Widget, is positioned by default on the top.
+
 ![two xp style text boxes](images/textbox.png)
 
 ```dart
