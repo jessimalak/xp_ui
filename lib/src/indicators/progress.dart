@@ -35,7 +35,7 @@ class ProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = XpTheme.of(context).progressBarStyle;
+    final style = XpTheme.of(context).progressBarTheme;
     return Semantics(
       label: semanticLabel,
       value: value?.toStringAsFixed(2),
@@ -165,7 +165,7 @@ class _ProgressIndeterminatedBarWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final theme = XpTheme.of(context).progressBarStyle;
+    final theme = XpTheme.of(context).progressBarTheme;
 
     return AnimatedBuilder(
         animation: _controller,

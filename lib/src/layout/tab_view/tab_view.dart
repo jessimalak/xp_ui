@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:xp_ui/src/layout/tab_view/tab.dart';
 import 'package:xp_ui/src/layout/tab_view/tab_view_controller.dart';
-import 'package:xp_ui/src/styles/theme.dart';
+import 'package:xp_ui/src/styles/theme/theme.dart';
 
 class XpTabView extends StatefulWidget {
   const XpTabView(

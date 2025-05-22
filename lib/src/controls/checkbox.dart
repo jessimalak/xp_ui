@@ -2,7 +2,7 @@ import 'package:flutter/material.dart' show Icons;
 import 'package:flutter/widgets.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_shadow/flutter_inset_shadow.dart';
 import 'package:xp_ui/src/styles/colors.dart';
-import 'package:xp_ui/src/styles/theme.dart';
+import 'package:xp_ui/src/styles/theme/theme.dart';
 import 'package:xp_ui/src/utils/widget_surveyor.dart';
 import 'dart:math' as math;
 

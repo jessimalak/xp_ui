@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_shadow/flutter_inset_shadow.dart';
-import 'package:xp_ui/src/styles/theme.dart';
+import 'package:xp_ui/src/styles/theme/theme.dart';
 
 class XpTab extends StatefulWidget {
   const XpTab(

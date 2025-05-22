@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_shadow/flutter_inset_shadow.dart';
 import 'package:xp_ui/src/styles/colors.dart';
-import 'package:xp_ui/src/styles/theme.dart';
+import 'package:xp_ui/src/styles/theme/button_theme.dart';
+import 'package:xp_ui/src/styles/theme/theme.dart';
 
 class Button extends StatefulWidget {
   final Widget child;
@@ -41,7 +42,7 @@ class _ButtonState extends State<Button> {
   @override
   Widget build(BuildContext context) {
     final theme = XpTheme.of(context);
-    final buttonStyle = theme.buttonStyle ?? const ButtonStyle();
+    final buttonStyle = theme.buttonStyle ?? const ButtonThemeData();
     return DecoratedBox(
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(3)),

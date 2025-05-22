@@ -20,11 +20,7 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/action_icons/close_icon.png
-    - assets/action_icons/maximize_icon.png
-    - assets/action_icons/maximized_icon.png
-    - assets/action_icons/minimize_icon.png
-    - assets/action_icons/help_icon.png
+    - assets/action_icons/
     - assets/system_icons/
 
   fonts:

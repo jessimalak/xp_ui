@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart' as m;
 import 'package:xp_ui/src/layout/scrollbar.dart';
 import 'package:xp_ui/src/styles/colors.dart';
-import 'package:xp_ui/src/styles/theme.dart';
+import 'package:xp_ui/src/styles/theme/theme.dart';
 
 class XpApp extends StatefulWidget {
   const XpApp(

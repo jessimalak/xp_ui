@@ -55,10 +55,10 @@ class XpAlertDialog extends StatelessWidget {
                           color: theme.accentColor,
                           width: _kDefaultBorderWidth),
                       bottom: BorderSide(
-                          color: theme.titleBarStyle.backgroundShade3,
+                          color: theme.titleBarTheme.backgroundShade3,
                           width: _kDefaultBorderWidth),
                       right: BorderSide(
-                          color: theme.titleBarStyle.backgroundShade3,
+                          color: theme.titleBarTheme.backgroundShade3,
                           width: _kDefaultBorderWidth))),
               child: Padding(
                 padding:
