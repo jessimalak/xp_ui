@@ -4,6 +4,7 @@ import 'package:xp_ui/src/styles/colors.dart';
 import 'package:xp_ui/src/styles/scrollbar_theme.dart';
 import 'package:xp_ui/src/styles/theme/button_theme.dart';
 import 'package:xp_ui/src/styles/theme/progressbar_theme.dart';
+import 'package:xp_ui/src/styles/theme/sidebar_theme.dart';
 import 'package:xp_ui/src/styles/theme/textbox_theme.dart';
 import 'package:xp_ui/src/styles/theme/titlebar_theme.dart';
 
@@ -18,7 +19,8 @@ class XpTheme extends StatelessWidget {
   }
 
   static XpThemeData of(BuildContext context) {
-    final _InheritedXpTheme? inheritedXpTheme = context.dependOnInheritedWidgetOfExactType<_InheritedXpTheme>();
+    final _InheritedXpTheme? inheritedXpTheme =
+        context.dependOnInheritedWidgetOfExactType<_InheritedXpTheme>();
     return inheritedXpTheme?.theme.data ?? XpThemeData();
   }
 }
@@ -28,7 +30,8 @@ class _InheritedXpTheme extends InheritedWidget {
 
   const _InheritedXpTheme({required this.theme, required super.child});
   @override
-  bool updateShouldNotify(covariant _InheritedXpTheme old) => theme.data != old.theme.data;
+  bool updateShouldNotify(covariant _InheritedXpTheme old) =>
+      theme.data != old.theme.data;
 }
 
 class XpThemeData with Diagnosticable {
@@ -44,6 +47,7 @@ class XpThemeData with Diagnosticable {
   final TitleBarThemeData titleBarTheme;
   final TextboxThemeData textBoxTheme;
   final ScrollbarTheme scrollbarTheme;
+  final SidebarThemeData sidebarTheme;
 
   XpThemeData(
       {this.accentColor = XpColors.moonBlue,
@@ -56,18 +60,27 @@ class XpThemeData with Diagnosticable {
       this.borderColor = XpDefaultThemeColors.outLineColor,
       TextboxThemeData? textBoxTheme,
       TitleBarThemeData? titleBarTheme,
-      ScrollbarTheme? scrollbarTheme})
-      : titleBarTheme = titleBarTheme ?? TitleBarThemeData(backgroundColor: accentColor),
-        textBoxTheme = textBoxTheme ?? TextboxThemeData(textStyle: TextStyle(color: textColor)),
-        scrollbarTheme = scrollbarTheme ?? ScrollbarTheme(thumbColor: XpDefaultThemeColors.scrollbarThumbColor) {
+      ScrollbarTheme? scrollbarTheme,
+      SidebarThemeData? sidebarTheme})
+      : titleBarTheme =
+            titleBarTheme ?? TitleBarThemeData(backgroundColor: accentColor),
+        textBoxTheme = textBoxTheme ??
+            TextboxThemeData(textStyle: TextStyle(color: textColor)),
+        scrollbarTheme = scrollbarTheme ??
+            ScrollbarTheme(
+                thumbColor: XpDefaultThemeColors.scrollbarThumbColor),
+        sidebarTheme = sidebarTheme ?? SidebarThemeData() {
     final HSLColor hslColor = HSLColor.fromColor(accentColor);
     lightAccentColor = hslColor.withLightness(0.9).toColor();
     if (buttonStyle == null) {
       this.buttonStyle = ButtonThemeData(
           hoverColorBottom: activeColor,
-          hoverColorLeft: ButtonThemeData.toPositionalHoverColor(activeColor, Position.left),
-          hoverColorTop: ButtonThemeData.toPositionalHoverColor(activeColor, Position.top),
-          hoverColorRight: ButtonThemeData.toPositionalHoverColor(activeColor, Position.right));
+          hoverColorLeft: ButtonThemeData.toPositionalHoverColor(
+              activeColor, Position.left),
+          hoverColorTop:
+              ButtonThemeData.toPositionalHoverColor(activeColor, Position.top),
+          hoverColorRight: ButtonThemeData.toPositionalHoverColor(
+              activeColor, Position.right));
     }
   }
 }
