@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:xp_ui/src/styles/colors.dart';
 import 'package:xp_ui/src/styles/scrollbar_theme.dart';
 import 'package:xp_ui/src/styles/theme/button_theme.dart';
+import 'package:xp_ui/src/styles/theme/expandable_item_theme.dart';
 import 'package:xp_ui/src/styles/theme/progressbar_theme.dart';
 import 'package:xp_ui/src/styles/theme/sidebar_theme.dart';
 import 'package:xp_ui/src/styles/theme/textbox_theme.dart';
@@ -48,6 +49,7 @@ class XpThemeData with Diagnosticable {
   final TextboxThemeData textBoxTheme;
   final ScrollbarTheme scrollbarTheme;
   final SidebarThemeData sidebarTheme;
+  final ExpandableItemThemeData expandableItemTheme;
 
   XpThemeData(
       {this.accentColor = XpColors.moonBlue,
@@ -61,7 +63,8 @@ class XpThemeData with Diagnosticable {
       TextboxThemeData? textBoxTheme,
       TitleBarThemeData? titleBarTheme,
       ScrollbarTheme? scrollbarTheme,
-      SidebarThemeData? sidebarTheme})
+      SidebarThemeData? sidebarTheme,
+      ExpandableItemThemeData? expandableItemTheme})
       : titleBarTheme =
             titleBarTheme ?? TitleBarThemeData(backgroundColor: accentColor),
         textBoxTheme = textBoxTheme ??
@@ -69,7 +72,8 @@ class XpThemeData with Diagnosticable {
         scrollbarTheme = scrollbarTheme ??
             ScrollbarTheme(
                 thumbColor: XpDefaultThemeColors.scrollbarThumbColor),
-        sidebarTheme = sidebarTheme ?? SidebarThemeData() {
+        sidebarTheme = sidebarTheme ?? SidebarThemeData(),
+        expandableItemTheme = expandableItemTheme ?? ExpandableItemThemeData() {
     final HSLColor hslColor = HSLColor.fromColor(accentColor);
     lightAccentColor = hslColor.withLightness(0.9).toColor();
     if (buttonStyle == null) {

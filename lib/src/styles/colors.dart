@@ -27,6 +27,9 @@ class XpDefaultThemeColors {
   static const Color diabledTextColor = Color(0x4B101010);
   static const Color textBoxOutlineColor = Color(0xff7f9db9);
   static const Color scrollbarThumbColor = Color(0xffc8d6fb);
-  static const Color sidebarStartColor = Color.fromRGBO(119, 159, 227, 1);
-  static const Color sidebarEndColor = Color.fromRGBO(99, 118, 212, 1);
+  static const Color sidebarStartColor = Color(0xFF779FE3);
+  static const Color sidebarEndColor = Color(0xFF6376D4);
+  static const Color expandableContentBackgroundColor = Color(0xFFD6DFF6);
+  static const Color expandableTextColor = Color(0xFF195BC2);
+  static const Color expandableTitleEndColor = Color(0xFFC5D6FB);
 }

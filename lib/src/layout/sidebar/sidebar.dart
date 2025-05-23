@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+
 class Sidebar {
   /// Creates a [Sidebar].
   ///
@@ -15,7 +16,7 @@ class Sidebar {
     this.snapToStartBuffer,
     this.maxWidth = 400.0,
     this.startWidth,
-    this.padding = EdgeInsets.zero,
+    this.padding = const EdgeInsets.symmetric(horizontal: 16),
     this.windowBreakpoint = 556.0,
     this.top,
     this.bottom,

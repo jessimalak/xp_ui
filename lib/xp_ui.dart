@@ -13,3 +13,6 @@ export './src/layout/tab_view/tab.dart';
 export './src/layout/tab_view/tab_view_controller.dart';
 export './src/controls/system_icon.dart';
 export './src/controls/checkbox.dart';
+export './src/layout/window.dart';
+export './src/layout/sidebar/sidebar.dart';
+export './src/layout/sidebar/sidebar_expandable_item.dart';
