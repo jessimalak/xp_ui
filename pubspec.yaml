@@ -21,6 +21,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/action_icons/
+    - assets/explorer_icons/
     - assets/system_icons/
 
   fonts:
