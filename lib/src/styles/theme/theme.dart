@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:xp_ui/src/styles/colors.dart';
 import 'package:xp_ui/src/styles/scrollbar_theme.dart';
 import 'package:xp_ui/src/styles/theme/button_theme.dart';
+import 'package:xp_ui/src/styles/theme/checkbox_theme.dart';
+import 'package:xp_ui/src/styles/theme/color_scheme.dart';
 import 'package:xp_ui/src/styles/theme/expandable_item_theme.dart';
 import 'package:xp_ui/src/styles/theme/progressbar_theme.dart';
 import 'package:xp_ui/src/styles/theme/sidebar_theme.dart';
@@ -36,55 +38,46 @@ class _InheritedXpTheme extends InheritedWidget {
 }
 
 class XpThemeData with Diagnosticable {
-  final Color accentColor;
-  late final Color lightAccentColor;
-  final Color activeColor;
-  final Color backgroundColor;
-  final Color controlsBackgroundColor;
-  final Color textColor;
-  final Color borderColor;
+  final ColorScheme colorScheme;
   late final ButtonThemeData? buttonStyle;
   final ProgressBarThemeData progressBarTheme;
-  final TitleBarThemeData titleBarTheme;
-  final TextboxThemeData textBoxTheme;
+  late final TitleBarThemeData titleBarTheme;
+  late final TextboxThemeData textBoxTheme;
   final ScrollbarTheme scrollbarTheme;
   final SidebarThemeData sidebarTheme;
   final ExpandableItemThemeData expandableItemTheme;
+  late final CheckboxThemeData checkboxTheme;
 
   XpThemeData(
-      {this.accentColor = XpColors.moonBlue,
-      this.activeColor = XpColors.orange,
-      this.backgroundColor = XpColors.windowBackground,
-      this.controlsBackgroundColor = XpColors.white,
+      {ColorScheme? colorScheme,
       ButtonThemeData? buttonStyle,
       this.progressBarTheme = const ProgressBarThemeData(),
-      this.textColor = XpDefaultThemeColors.textColor,
-      this.borderColor = XpDefaultThemeColors.outLineColor,
       TextboxThemeData? textBoxTheme,
       TitleBarThemeData? titleBarTheme,
       ScrollbarTheme? scrollbarTheme,
       SidebarThemeData? sidebarTheme,
+      this. checkboxTheme = const CheckboxThemeData(),
       ExpandableItemThemeData? expandableItemTheme})
-      : titleBarTheme =
-            titleBarTheme ?? TitleBarThemeData(backgroundColor: accentColor),
-        textBoxTheme = textBoxTheme ??
-            TextboxThemeData(textStyle: TextStyle(color: textColor)),
+      : colorScheme = colorScheme ?? ColorScheme(),
         scrollbarTheme = scrollbarTheme ??
             ScrollbarTheme(
                 thumbColor: XpDefaultThemeColors.scrollbarThumbColor),
         sidebarTheme = sidebarTheme ?? SidebarThemeData(),
         expandableItemTheme = expandableItemTheme ?? ExpandableItemThemeData() {
-    final HSLColor hslColor = HSLColor.fromColor(accentColor);
-    lightAccentColor = hslColor.withLightness(0.9).toColor();
+    this.titleBarTheme = titleBarTheme ??
+        TitleBarThemeData(backgroundColor: this.colorScheme.primaryColor);
+    this.textBoxTheme = textBoxTheme ??
+        TextboxThemeData(
+            textStyle: TextStyle(color: this.colorScheme.textColor));
     if (buttonStyle == null) {
       this.buttonStyle = ButtonThemeData(
-          hoverColorBottom: activeColor,
+          hoverColorBottom: this.colorScheme.activeColor,
           hoverColorLeft: ButtonThemeData.toPositionalHoverColor(
-              activeColor, Position.left),
-          hoverColorTop:
-              ButtonThemeData.toPositionalHoverColor(activeColor, Position.top),
+              this.colorScheme.activeColor, Position.left),
+          hoverColorTop: ButtonThemeData.toPositionalHoverColor(
+              this.colorScheme.activeColor, Position.top),
           hoverColorRight: ButtonThemeData.toPositionalHoverColor(
-              activeColor, Position.right));
+              this.colorScheme.activeColor, Position.right));
     }
   }
 }

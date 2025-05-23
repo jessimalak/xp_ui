@@ -105,8 +105,8 @@ class _ButtonState extends State<Button> {
                 child: DefaultTextStyle(
                     style: TextStyle(
                         color: !widget.enabled
-                            ? XpDefaultThemeColors.diabledTextColor
-                            : theme.textColor),
+                            ? theme.colorScheme.disabledColor
+                            : theme.colorScheme.textColor),
                     child: widget.child),
               )),
         ),

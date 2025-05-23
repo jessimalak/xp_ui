@@ -100,7 +100,7 @@ class _XpWindowState extends State<XpWindow> {
     final duration = Duration(milliseconds: _sidebarSlideDuration);
     final XpThemeData theme = XpTheme.of(context);
     late Color backgroundColor =
-        widget.backgroundColor ?? theme.backgroundColor;
+        widget.backgroundColor ?? theme.colorScheme.backgroundColor;
     return LayoutBuilder(builder: (context, constraints) {
       final width = constraints.maxWidth;
       final height = constraints.maxHeight;

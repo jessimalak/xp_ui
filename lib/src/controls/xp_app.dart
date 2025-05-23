@@ -181,10 +181,12 @@ class _XpAppState extends State<XpApp> {
 
   @override
   Widget build(BuildContext context) {
-    return HeroControllerScope(controller: _heroController, child: _builder(context, widget.home));
+    return HeroControllerScope(
+        controller: _heroController, child: _builder(context, widget.home));
   }
 
-  bool get _usesRouter => widget.routerDelegate != null || widget.routerConfig != null;
+  bool get _usesRouter =>
+      widget.routerDelegate != null || widget.routerConfig != null;
 
   m.ThemeData get mTheme => m.ThemeData(
       fontFamily: 'MS',
@@ -194,20 +196,27 @@ class _XpAppState extends State<XpApp> {
           trackVisibility: const WidgetStatePropertyAll(true),
           thickness: const WidgetStatePropertyAll(14),
           radius: const Radius.circular(3),
-          thumbColor: WidgetStatePropertyAll(widget.theme?.lightAccentColor)),
+          thumbColor: WidgetStatePropertyAll(
+              widget.theme?.colorScheme.lightPrimaryColor)),
       colorScheme: m.ColorScheme.fromSeed(
-          seedColor: widget.theme?.accentColor ?? XpColors.moonBlue, surface: widget.theme?.backgroundColor));
+          seedColor:
+              widget.theme?.colorScheme.primaryColor ?? XpColors.moonBlue,
+          surface: widget.theme?.colorScheme.backgroundColor));
 
   Widget _xpBuilder(BuildContext context, Widget? child) {
     final theme = widget.theme ?? XpThemeData();
     return XpTheme(
         data: theme,
         child: DefaultTextStyle(
-          style: TextStyle(color: theme.textColor, fontSize: 12),
+          style: TextStyle(color: theme.colorScheme.textColor, fontSize: 12),
           child: widget.builder != null
               ? Builder(
                   builder: (context) => Overlay(
-                        initialEntries: [OverlayEntry(builder: (context) => widget.builder!(context, child))],
+                        initialEntries: [
+                          OverlayEntry(
+                              builder: (context) =>
+                                  widget.builder!(context, child))
+                        ],
                       ))
               : child ?? const SizedBox.shrink(),
         ));
@@ -274,7 +283,8 @@ class XpScrollBehavior extends ScrollBehavior {
   const XpScrollBehavior();
 
   @override
-  Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
+  Widget buildScrollbar(
+      BuildContext context, Widget child, ScrollableDetails details) {
     return XpScrollbar(controller: details.controller, child: child);
   }
 }
