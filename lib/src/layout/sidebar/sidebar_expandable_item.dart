@@ -43,8 +43,7 @@ class SidebarExpandableItem extends StatefulWidget {
     this.elevation = 2.0,
     this.initialElevation = 0.0,
     this.initiallyExpanded = false,
-    this.initialPadding = EdgeInsets.zero,
-    this.finalPadding = const EdgeInsets.all(8.0),
+    this.margin = const EdgeInsets.all(0),
     this.contentPadding,
     this.baseColor,
     this.expandedColor,
@@ -123,12 +122,7 @@ class SidebarExpandableItem extends StatefulWidget {
   /// The padding around the outside of the SidebarExpandableItem while collapsed.
   ///
   /// Defaults to EdgeInsets.zero.
-  final EdgeInsetsGeometry initialPadding;
-
-  /// The padding around the outside of the SidebarExpandableItem while collapsed.
-  ///
-  /// Defaults to 6.0 vertical padding.
-  final EdgeInsetsGeometry finalPadding;
+  final EdgeInsetsGeometry margin;
 
   /// The inner `contentPadding` of the ListTile widget.
   ///
@@ -192,33 +186,23 @@ class SidebarExpandableItemState extends State<SidebarExpandableItem>
   final ColorTween _headerColorTween = ColorTween();
   final ColorTween _iconColorTween = ColorTween();
   final ColorTween _materialColorTween = ColorTween();
-  late EdgeInsetsTween _edgeInsetsTween;
   late Animatable<double> _heightFactorTween;
   late Animatable<double> _turnsTween;
-  late Animatable<double> _paddingTween;
-
   late AnimationController _controller;
   late Animation<double> _iconTurns;
   late Animation<double> _heightFactor;
-
-  late Animation<EdgeInsets> _padding;
 
   bool _isExpanded = false;
 
   @override
   void initState() {
     super.initState();
-    _edgeInsetsTween = EdgeInsetsTween(
-      begin: widget.initialPadding as EdgeInsets?,
-      end: widget.finalPadding as EdgeInsets?,
-    );
     _heightFactorTween = CurveTween(curve: widget.heightFactorCurve);
     _turnsTween = CurveTween(curve: widget.turnsCurve);
-    _paddingTween = CurveTween(curve: widget.paddingCurve);
     _controller = AnimationController(duration: widget.duration, vsync: this);
     _heightFactor = _controller.drive(_heightFactorTween);
     _iconTurns = _controller.drive(_halfTween.chain(_turnsTween));
-    _padding = _controller.drive(_edgeInsetsTween.chain(_paddingTween));
+
     _isExpanded = PageStorage.of(context).readState(context) as bool? ??
         widget.initiallyExpanded;
     if (_isExpanded) _controller.value = 0.25;
@@ -268,10 +252,10 @@ class SidebarExpandableItemState extends State<SidebarExpandableItem>
   Widget _buildChildren(BuildContext context, Widget? child) {
     final XpThemeData theme = XpTheme.of(context);
     return Padding(
-      padding: _padding.value,
+      padding: widget.margin,
       child: Material(
         type: MaterialType.card,
-        color: theme.expandableItemTheme.contentBackgroundColor,
+        color: theme.expandableItemTheme.contentBackgroundColor ?? XpDefaultThemeColors.expandableContentBackgroundColor,
         borderRadius: widget.borderRadius,
         clipBehavior: Clip.hardEdge,
         child: Column(
@@ -280,8 +264,8 @@ class SidebarExpandableItemState extends State<SidebarExpandableItem>
             DecoratedBox(
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
-                theme.expandableItemTheme.titleStartBackgroundColor,
-                theme.expandableItemTheme.titleEndBackgroundColor
+                theme.expandableItemTheme.titleStartBackgroundColor ?? XpColors.white,
+                theme.expandableItemTheme.titleEndBackgroundColor?? XpDefaultThemeColors.expandableTitleEndColor
               ], stops: const [
                 0.5,
                 1
@@ -299,7 +283,7 @@ class SidebarExpandableItemState extends State<SidebarExpandableItem>
                         DefaultTextStyle(
                             style: TextStyle(
                                 fontFamily: 'Trebuchet',
-                                color: theme.expandableItemTheme.textColor,
+                                color: theme.expandableItemTheme.textColor ?? XpDefaultThemeColors.expandableTextColor,
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600),
                             child: widget.title),
@@ -307,7 +291,7 @@ class SidebarExpandableItemState extends State<SidebarExpandableItem>
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: XpColors.white,
-                              border: Border.all(color: theme.borderColor)),
+                              border: Border.all(color: theme.colorScheme.borderColor)),
                           child: RotationTransition(
                             turns: widget.trailing == null ||
                                     widget.animateTrailing
