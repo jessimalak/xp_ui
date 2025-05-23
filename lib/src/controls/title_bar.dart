@@ -101,6 +101,7 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
           style: TextStyle(
               color: style.foregroundColor,
               fontSize: 13,
+              fontWeight: FontWeight.bold,
               fontFamily: 'Trebuchet'),
         ),
       ],
