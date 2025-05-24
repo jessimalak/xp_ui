@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ListTile;
 import 'package:window_manager/window_manager.dart';
-import 'package:xp_ui/xp_ui.dart' hide TitleBarStyle;
+import 'package:xp_ui/xp_ui.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -90,9 +90,43 @@ class _MyHomePageState extends State<MyHomePage> {
       sidebar: Sidebar(
           builder: (context, controller) => SingleChildScrollView(
                 controller: controller,
-                child: Column(
+                child: const Column(
+                  spacing: 8,
                   children: [
-                    SidebarExpandableItem(title: Text('System Tasks'), children: [Text('data')])
+                    SidebarExpandableItem(
+                      initiallyExpanded: true,
+                        title: Text('Expandable item'),
+                        children: [
+                          ListTile(
+                              label: Text('Documents'),
+                              icon: SystemIcon(
+                                  icon: XpSystemIcons.folderDocument)),
+                          ListTile(
+                              label: Text('Music'),
+                              icon:
+                                  SystemIcon(icon: XpSystemIcons.folderMusic)),
+                          ListTile(
+                              label: Text('My PC'),
+                              icon: SystemIcon(icon: XpSystemIcons.computer))
+                        ]),
+                    SidebarExpandableItem(
+                      initiallyExpanded: true,
+                      title: Text('Details'),
+                      children: [
+                        Text(
+                          'xp_ui package',
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          'By Jessimalak',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        Text(
+                          'With 🩵 for Flutter community',
+                          style: TextStyle(fontSize: 12),
+                        )
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -285,12 +319,17 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  XpCheckbox(
-                    value: true,
-                    label: 'checkbox label',
+                  const XpCheckbox(
+                    value: false,
+                    label: 'checkbox disabled',
                   ),
                   XpCheckbox(
                     value: false,
+                    label: 'checkbox label',
+                    onChanged: (value) {},
+                  ),
+                  XpCheckbox(
+                    value: true,
                     label: 'checkbox label',
                     onChanged: (value) {},
                   ),
