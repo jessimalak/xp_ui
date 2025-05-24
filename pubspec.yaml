@@ -1,6 +1,6 @@
 name: xp_ui
-description: "Windows XP UI components for Flutter apps."
-version: 0.0.1
+description: "A collection of Flutter widgets that faithfully replicate the iconic visual style of Windows XP. Easy to integrate to give your apps a unique retro tap."
+version: 0.1.0
 repository: https://github.com/jessimalak/xp_ui
 
 environment:

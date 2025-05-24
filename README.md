@@ -31,6 +31,8 @@ Required to load all Xp styles, is compatible with standart flutter material Wid
     home: const MyHomePage(title: 'Flutter Demo Home Page'),
 );
 ```
+#### Window
+`XpWindow` is the basic frame for a Xp-style layout. It supports a `Sidebar` on the left, and optional `TitleBar` at the top.
 
 #### TitleBar
 Provides the window title bar with customizable 4 action button.
@@ -39,8 +41,8 @@ Provides the window title bar with customizable 4 action button.
 
 ![Xp style window title bar](images/titlebar.png)
 ```dart
-Scaffold(
-    appBar: TitleBar(
+XpWindow(
+    titlebar: TitleBar(
         'Example',
         showHelpButton: true,
         showMaximizeButton: true,
@@ -49,6 +51,64 @@ Scaffold(
         onHelpButtonPressed: () {},
       )
 )
+```
+
+#### Sidebar
+Provides quick access to top-level collections of conent in your app.
+
+![Xp style window sidebar](images/sidebar.png)
+```dart
+XpWindow(
+    sidebar: Sidebar(
+          builder: (context, controller) => SingleChildScrollView(
+                controller: controller,
+                child: const Column(
+                  spacing: 8,
+                  children: [
+                    SidebarExpandableItem(
+                      initiallyExpanded: true,
+                      title: Text('Details'),
+                      children: [
+                        Text(
+                          'xp_ui package',
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          'By Jessimalak',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        Text(
+                          'With 🩵 for Flutter community',
+                          style: TextStyle(fontSize: 12),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+          minWidth: 200,
+          shownByDefault: true)
+)
+```
+
+#### Sidebar Expandable Item
+Similar to Material's `ExpansionTitle` with the style of original Xp style expandable panels on window sidebar.
+
+```dart
+SidebarExpandableItem(
+    initiallyExpanded: true,
+    title: Text('Expandable item'),
+    children: [
+        ListTile(
+            label: Text('Documents'),
+            icon: SystemIcon(icon: XpSystemIcons.folderDocument)),
+        ListTile(
+            label: Text('Music'),
+            icon: SystemIcon(icon: XpSystemIcons.folderMusic)),
+        ListTile(
+            label: Text('My PC'),
+            icon: SystemIcon(icon: XpSystemIcons.computer))
+        ]),
 ```
 
 #### Button
@@ -69,9 +129,11 @@ you can provide a value between 0-100 to show progress, or null to show an indet
 ![xp style green progress bar](images/progressbar.png)
 
 ```dart
-ProgressBar(
-    value: 82.0
-)
+//with value
+ProgressBar(value: 82.0)
+
+//without value, indeterminated
+ProgressBar()
 ```
 
 #### Checkbox
@@ -148,13 +210,22 @@ AlertType.success;
 ```
 ![two xp style alert dialog](images/alerts/alert_success.png)
 
+
+#### XpIcon
+Show Xp-style icons from `SystemIcons` collection.
+![two xp style computer](assets/system_icons/computer.png) ![two xp style folder](assets/system_icons/folderClose.png) ![two xp style volume icon](assets/system_icons/sound.png) ![two xp style folder](assets/system_icons/printer.png)
+
+```dart
+SystemIcon(icon: XpSystemIcons.folderDocument)
+```
+
 <hr>
 
 ### Contributing
 
 You can contribute in different ways:
 
-- Creating new Windows95 styled components.
+- Creating new WindowsXp styled components.
   - Please include screenshots in your PRs!
   - Please update the example and tests to include the new component!
 - Improving existing components with better options.
