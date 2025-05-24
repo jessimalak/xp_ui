@@ -34,32 +34,25 @@ class SidebarExpandableItem extends StatefulWidget {
     super.key,
     this.leading,
     required this.title,
-    this.subtitle,
     this.onExpansionChanged,
     this.children = const <Widget>[],
     this.trailing,
     this.borderRadius = const BorderRadius.vertical(
         bottom: Radius.circular(2.0), top: Radius.circular(6)),
-    this.elevation = 2.0,
-    this.initialElevation = 0.0,
     this.initiallyExpanded = false,
     this.margin = const EdgeInsets.all(0),
-    this.contentPadding,
+    this.contentPadding = const EdgeInsets.all(6),
     this.baseColor,
     this.expandedColor,
     this.expandedTextColor,
     this.duration = const Duration(milliseconds: 200),
-    this.elevationCurve = Curves.easeOut,
     this.heightFactorCurve = Curves.easeIn,
     this.turnsCurve = Curves.easeIn,
     this.colorCurve = Curves.easeIn,
     this.paddingCurve = Curves.easeIn,
-    this.isThreeLine = false,
     this.shadowColor = const Color(0xffaaaaaa),
     this.animateTrailing = false,
   });
-
-  final bool isThreeLine;
 
   /// A widget to display before the title.
   ///
@@ -70,11 +63,6 @@ class SidebarExpandableItem extends StatefulWidget {
   ///
   /// Typically a [Text] widget.
   final Widget title;
-
-  /// Additional content displayed below the title.
-  ///
-  /// Typically a [Text] widget.
-  final Widget? subtitle;
 
   /// Called when the tile expands or collapses.
   ///
@@ -101,16 +89,6 @@ class SidebarExpandableItem extends StatefulWidget {
   /// Defaults to a circular border with a radius of 8.0.
   final BorderRadiusGeometry borderRadius;
 
-  /// The final elevation of the Material widget, once expanded.
-  ///
-  /// Defaults to 2.0.
-  final double elevation;
-
-  /// The elevation when collapsed
-  ///
-  /// Defaults to 0.0
-  final double initialElevation;
-
   /// The color of the cards shadow.
   ///
   /// Defaults to Color(0xffaaaaaa)
@@ -127,7 +105,7 @@ class SidebarExpandableItem extends StatefulWidget {
   /// The inner `contentPadding` of the ListTile widget.
   ///
   /// If null, ListTile defaults to 16.0 horizontal padding.
-  final EdgeInsetsGeometry? contentPadding;
+  final EdgeInsetsGeometry contentPadding;
 
   /// The background color of the unexpanded tile.
   ///
@@ -148,11 +126,6 @@ class SidebarExpandableItem extends StatefulWidget {
   ///
   /// Defaults to 200 milliseconds.
   final Duration duration;
-
-  /// The animation curve used to control the elevation of the expanded card.
-  ///
-  /// Defaults to Curves.easeOut.
-  final Curve elevationCurve;
 
   /// The animation curve used to control the height of the expanding/collapsing card.
   ///
@@ -205,7 +178,7 @@ class SidebarExpandableItemState extends State<SidebarExpandableItem>
 
     _isExpanded = PageStorage.of(context).readState(context) as bool? ??
         widget.initiallyExpanded;
-    if (_isExpanded) _controller.value = 0.25;
+    if (_isExpanded) _controller.value = 1;
   }
 
   @override
@@ -255,17 +228,21 @@ class SidebarExpandableItemState extends State<SidebarExpandableItem>
       padding: widget.margin,
       child: Material(
         type: MaterialType.card,
-        color: theme.expandableItemTheme.contentBackgroundColor ?? XpDefaultThemeColors.expandableContentBackgroundColor,
+        color: theme.expandableItemTheme.contentBackgroundColor ??
+            XpDefaultThemeColors.expandableContentBackgroundColor,
         borderRadius: widget.borderRadius,
         clipBehavior: Clip.hardEdge,
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             DecoratedBox(
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
-                theme.expandableItemTheme.titleStartBackgroundColor ?? XpColors.white,
-                theme.expandableItemTheme.titleEndBackgroundColor?? XpDefaultThemeColors.expandableTitleEndColor
+                theme.expandableItemTheme.titleStartBackgroundColor ??
+                    XpColors.white,
+                theme.expandableItemTheme.titleEndBackgroundColor ??
+                    XpDefaultThemeColors.expandableTitleEndColor
               ], stops: const [
                 0.5,
                 1
@@ -283,7 +260,8 @@ class SidebarExpandableItemState extends State<SidebarExpandableItem>
                         DefaultTextStyle(
                             style: TextStyle(
                                 fontFamily: 'Trebuchet',
-                                color: theme.expandableItemTheme.textColor ?? XpDefaultThemeColors.expandableTextColor,
+                                color: theme.expandableItemTheme.textColor ??
+                                    XpDefaultThemeColors.expandableTextColor,
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600),
                             child: widget.title),
@@ -291,7 +269,8 @@ class SidebarExpandableItemState extends State<SidebarExpandableItem>
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: XpColors.white,
-                              border: Border.all(color: theme.colorScheme.borderColor)),
+                              border: Border.all(
+                                  color: theme.colorScheme.borderColor)),
                           child: RotationTransition(
                             turns: widget.trailing == null ||
                                     widget.animateTrailing
@@ -342,7 +321,17 @@ class SidebarExpandableItemState extends State<SidebarExpandableItem>
     return AnimatedBuilder(
       animation: _controller.view,
       builder: _buildChildren,
-      child: closed ? null : Column(children: widget.children),
+      child: closed
+          ? null
+          : Padding(
+            padding: widget.contentPadding,
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                const SizedBox(
+                  width: double.infinity,
+                ),
+                ...widget.children
+              ]),
+          ),
     );
   }
 }
