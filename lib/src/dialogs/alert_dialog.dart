@@ -35,7 +35,7 @@ class XpAlertDialog extends StatelessWidget {
           ),
     );
     return Dialog(
-      backgroundColor: theme.backgroundColor,
+      backgroundColor: theme.colorScheme.backgroundColor,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(6))),
       clipBehavior: Clip.hardEdge,
@@ -52,13 +52,13 @@ class XpAlertDialog extends StatelessWidget {
               decoration: BoxDecoration(
                   border: Border(
                       left: BorderSide(
-                          color: theme.accentColor,
+                          color: theme.colorScheme.primaryColor,
                           width: _kDefaultBorderWidth),
                       bottom: BorderSide(
-                          color: theme.titleBarStyle.backgroundShade3,
+                          color: theme.titleBarTheme.backgroundShade3,
                           width: _kDefaultBorderWidth),
                       right: BorderSide(
-                          color: theme.titleBarStyle.backgroundShade3,
+                          color: theme.titleBarTheme.backgroundShade3,
                           width: _kDefaultBorderWidth))),
               child: Padding(
                 padding:

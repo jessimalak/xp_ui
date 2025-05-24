@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ListTile;
 import 'package:window_manager/window_manager.dart';
-import 'package:xp_ui/xp_ui.dart' hide TitleBarStyle;
+import 'package:xp_ui/xp_ui.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,27 +73,71 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:  TitleBar.window(
-              'Example',
-              showHelpButton: true,
-              onHelpButtonPressed: () {
-                showXpDialog(
-                    context: context,
-                    builder: (context) => const XpAlertDialog(
-                          title: 'About',
-                          content: Text('Xp_ui for flutter\nBy Malak;'),
-                          alerType: AlertType.info,
-                        ));
-              },
-            ),
-      body: Padding(
+    return XpWindow(
+      titleBar: TitleBar.window(
+        'Example',
+        showHelpButton: true,
+        onHelpButtonPressed: () {
+          showXpDialog(
+              context: context,
+              builder: (context) => const XpAlertDialog(
+                    title: 'About',
+                    content: Text('Xp_ui for flutter\nBy Malak;'),
+                    alerType: AlertType.info,
+                  ));
+        },
+      ),
+      sidebar: Sidebar(
+          builder: (context, controller) => SingleChildScrollView(
+                controller: controller,
+                child: const Column(
+                  spacing: 8,
+                  children: [
+                    SidebarExpandableItem(
+                      initiallyExpanded: true,
+                        title: Text('Expandable item'),
+                        children: [
+                          ListTile(
+                              label: Text('Documents'),
+                              icon: SystemIcon(
+                                  icon: XpSystemIcons.folderDocument)),
+                          ListTile(
+                              label: Text('Music'),
+                              icon:
+                                  SystemIcon(icon: XpSystemIcons.folderMusic)),
+                          ListTile(
+                              label: Text('My PC'),
+                              icon: SystemIcon(icon: XpSystemIcons.computer))
+                        ]),
+                    SidebarExpandableItem(
+                      initiallyExpanded: true,
+                      title: Text('Details'),
+                      children: [
+                        Text(
+                          'xp_ui package',
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          'By Jessimalak',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        Text(
+                          'With 🩵 for Flutter community',
+                          style: TextStyle(fontSize: 12),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+          minWidth: 200,
+          shownByDefault: true),
+      child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-           
             const SizedBox(
               height: 16,
             ),
@@ -188,7 +232,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (context) => XpAlertDialog(
                               title: 'Info Alert',
                               alerType: AlertType.info,
-                              content: const Text('This is an info alert dialog'),
+                              content:
+                                  const Text('This is an info alert dialog'),
                               actions: [
                                 Button(
                                   child: const Text('Cancel'),
@@ -214,8 +259,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (context) => XpAlertDialog(
                               title: 'Question Alert',
                               alerType: AlertType.question,
-                              content:
-                                  const Text('This is an question alert dialog'),
+                              content: const Text(
+                                  'This is an question alert dialog'),
                               actions: [
                                 Button(
                                   child: const Text('Cancel'),
@@ -270,20 +315,26 @@ class _MyHomePageState extends State<MyHomePage> {
               labelText: 'Label left Text',
               labelPosition: TextboxLabelPosition.left,
             ),
-            Row(
-              children: [
-                XpCheckbox(
-                  value: true,
-                  label: 'checkbox label',
-                ),
-                XpCheckbox(
-                  value: false,
-                  label: 'checkbox label',
-                  onChanged: (value) {
-                    
-                  },
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const XpCheckbox(
+                    value: false,
+                    label: 'checkbox disabled',
+                  ),
+                  XpCheckbox(
+                    value: false,
+                    label: 'checkbox label',
+                    onChanged: (value) {},
+                  ),
+                  XpCheckbox(
+                    value: true,
+                    label: 'checkbox label',
+                    onChanged: (value) {},
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: Row(
@@ -293,10 +344,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           itemCount: 64,
                           itemBuilder: (context, i) => Text('Item $i'))),
                   Expanded(
-                    child: XpTabView(
-                        controller: _tabViewController,
-                        tabs: [XpTab(label: 'label 1'), XpTab(label: 'label 2')],
-                        children: [Text('contenido'), Text('contenido')]),
+                    child: XpTabView(controller: _tabViewController, tabs: [
+                      XpTab(label: 'label 1'),
+                      XpTab(label: 'label 2')
+                    ], children: [
+                      Text('contenido'),
+                      Text('contenido')
+                    ]),
                   )
                 ],
               ),

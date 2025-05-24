@@ -35,7 +35,7 @@ class ProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = XpTheme.of(context).progressBarStyle;
+    final theme = XpTheme.of(context);
     return Semantics(
       label: semanticLabel,
       value: value?.toStringAsFixed(2),
@@ -45,7 +45,7 @@ class ProgressBar extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
               border: Border.all(
-                  color: style.borderColor,
+                  color: theme.progressBarTheme.borderColor ?? theme.colorScheme.borderColor,
                   strokeAlign: BorderSide.strokeAlignOutside),
               borderRadius: const BorderRadius.all(Radius.circular(3))),
           child: value == null
@@ -53,8 +53,8 @@ class ProgressBar extends StatelessWidget {
               : CustomPaint(
                   painter: _ProgressDeterminatedBarPainter(
                     value!,
-                    backgroundColor: style.backgroundColor,
-                    activeColor: style.trackColor,
+                    backgroundColor: theme.progressBarTheme.backgroundColor ?? theme.colorScheme.controlsBackgroundColor,
+                    activeColor: theme.progressBarTheme.trackColor  ?? theme.colorScheme.accentColor,
                   ),
                 ),
         ),
@@ -165,7 +165,7 @@ class _ProgressIndeterminatedBarWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final theme = XpTheme.of(context).progressBarStyle;
+    final theme = XpTheme.of(context);
 
     return AnimatedBuilder(
         animation: _controller,
@@ -186,8 +186,8 @@ class _ProgressIndeterminatedBarWidgetState
                 cycle = values[2];
                 idle = values[3];
               },
-              backgroundColor: theme.backgroundColor,
-              activeColor: theme.trackColor,
+              backgroundColor: theme.progressBarTheme.backgroundColor ?? theme.colorScheme.controlsBackgroundColor,
+              activeColor: theme.progressBarTheme.trackColor ?? theme.colorScheme.accentColor,
             ),
           );
         });

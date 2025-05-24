@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:xp_ui/src/styles/colors.dart';
-import 'package:xp_ui/src/styles/theme.dart';
+import 'package:xp_ui/src/styles/theme/theme.dart';
 
 const double _kScrollbarMinLength = 36.0;
 const double _kScrollbarMinOverscrollLength = 8.0;

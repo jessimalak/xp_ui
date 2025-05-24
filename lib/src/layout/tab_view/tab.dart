@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_shadow/flutter_inset_shadow.dart';
-import 'package:xp_ui/src/styles/theme.dart';
+import 'package:xp_ui/src/styles/theme/theme.dart';
 
 class XpTab extends StatefulWidget {
   const XpTab(
@@ -28,7 +28,7 @@ class _XpTabState extends State<XpTab> {
   Widget build(BuildContext context) {
     final theme = XpTheme.of(context);
     final border = BorderSide(
-      color: theme.borderColor,
+      color: theme.colorScheme.borderColor,
     );
     return MouseRegion(
       onEnter: (event) {
@@ -41,12 +41,12 @@ class _XpTabState extends State<XpTab> {
         onTap: widget.onPressed,
         child: DecoratedBox(
           decoration: BoxDecoration(
-              color: theme.controlsBackgroundColor,
+              color: theme.colorScheme.controlsBackgroundColor,
               boxShadow: _hover || widget.active
                   ? [
                       BoxShadow(
                           inset: true,
-                          color: theme.activeColor,
+                          color: theme.colorScheme.activeColor,
                           offset: const Offset(0, 3))
                     ]
                   : [],

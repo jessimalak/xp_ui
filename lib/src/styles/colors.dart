@@ -22,9 +22,15 @@ class XpDefaultThemeColors {
   static const Color buttonHoverColorRight = Color(0xfffdd889);
   static const Color buttonHoverColorLeft = Color(0xfffbc761);
   static const Color buttonHoverColorBottom = Color(0xffe5a01a);
-  static const Color outLineColor = Color(0xff686868);
+  static const Color outlineColor = Color(0xff686868);
+  static const Color controlsOutlineColor = Color.fromRGBO(54, 76, 84, 1);
   static const Color textColor = Color(0xff222222);
-  static const Color diabledTextColor = Color(0x4B101010);
+  static const Color disabledTextColor = Color(0x58212121);
   static const Color textBoxOutlineColor = Color(0xff7f9db9);
   static const Color scrollbarThumbColor = Color(0xffc8d6fb);
+  static const Color sidebarStartColor = Color(0xFF779FE3);
+  static const Color sidebarEndColor = Color(0xFF6376D4);
+  static const Color expandableContentBackgroundColor = Color(0xFFD6DFF6);
+  static const Color expandableTextColor = Color(0xFF195BC2);
+  static const Color expandableTitleEndColor = Color(0xFFC5D6FB);
 }

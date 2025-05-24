@@ -77,7 +77,7 @@ class _TextboxState extends State<Textbox> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = XpTheme.of(context).textBoxStyle;
+    final theme = XpTheme.of(context).textBoxTheme;
     return LayoutBuilder(
       builder: (context, constraints) {
         return Flex(
