@@ -14,3 +14,5 @@ export './src/layout/window.dart';
 export './src/layout/sidebar/sidebar.dart';
 export './src/layout/sidebar/sidebar_expandable_item.dart';
 export './src/controls/list_tile.dart';
+export './src/controls/group.dart';
+export 'src/controls/radio_options.dart';
