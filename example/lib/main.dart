@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   spacing: 8,
                   children: [
                     SidebarExpandableItem(
-                      initiallyExpanded: true,
+                        initiallyExpanded: true,
                         title: Text('Expandable item'),
                         children: [
                           ListTile(
@@ -314,31 +314,40 @@ class _MyHomePageState extends State<MyHomePage> {
               labelText: 'Label left Text',
               labelPosition: TextboxLabelPosition.left,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  const XpCheckbox(
-                    value: false,
-                    label: 'checkbox disabled',
-                  ),
-                  XpCheckbox(
-                    value: false,
-                    label: 'checkbox label',
-                    onChanged: (value) {},
-                  ),
-                  XpCheckbox(
-                    value: true,
-                    label: 'checkbox label',
-                    onChanged: (value) {},
-                  ),
-                ],
-              ),
-            ),
             Expanded(
-                child: ListView.builder(
-                    itemCount: 64,
-                    itemBuilder: (context, i) => Text('Item $i')))
+                child: Row(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: 64,
+                      itemBuilder: (context, i) => Text('Item $i')),
+                ),
+                Expanded(flex: 2,
+                    child: Wrap(
+                  children: [
+                    Group(
+                      label: const Text('Checkbox'),
+                      children: [
+                        const XpCheckbox(
+                          value: false,
+                          label: 'checkbox disabled',
+                        ),
+                        XpCheckbox(
+                          value: false,
+                          label: 'checkbox label',
+                          onChanged: (value) {},
+                        ),
+                        XpCheckbox(
+                          value: true,
+                          label: 'checkbox label',
+                          onChanged: (value) {},
+                        ),
+                      ],
+                    ),
+                  ],
+                ))
+              ],
+            ))
           ],
         ),
       ),
