@@ -46,7 +46,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   late final Timer _timer;
-  final XpTabViewController _tabViewController = XpTabViewController(length: 2);
 
   void _incrementCounter() {
     if (_counter == 100) {
@@ -337,24 +336,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                      child: ListView.builder(
-                          itemCount: 64,
-                          itemBuilder: (context, i) => Text('Item $i'))),
-                  Expanded(
-                    child: XpTabView(controller: _tabViewController, tabs: [
-                      XpTab(label: 'label 1'),
-                      XpTab(label: 'label 2')
-                    ], children: [
-                      Text('contenido'),
-                      Text('contenido')
-                    ]),
-                  )
-                ],
-              ),
-            )
+                child: ListView.builder(
+                    itemCount: 64,
+                    itemBuilder: (context, i) => Text('Item $i')))
           ],
         ),
       ),
