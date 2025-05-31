@@ -68,84 +68,92 @@ class _XpCheckboxState extends State<XpCheckbox> {
   Widget build(BuildContext context) {
     final theme = XpTheme.of(context);
     final isEnabled = widget.onChanged != null;
-    return MouseRegion(
-      onEnter: (event) => setState(() => _hover = true),
-      onExit: (event) => setState(() => _hover = false),
-      child: SizedBox(
-        width: _labelWidth! + _kDefaultCheckboxSize + (_kDefaultSpacing * 2),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(
-              width: _kDefaultSpacing,
-            ),
-            DecoratedBox(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        strokeAlign: BorderSide.strokeAlignOutside,
-                        color: !isEnabled
-                            ? theme.checkboxTheme.disabledColor ??
-                                theme.colorScheme.disabledColor
-                            : theme.checkboxTheme.borderColor ??
-                                theme.colorScheme.borderControlColor),
-                    color: isEnabled
-                        ? null
-                        : theme.checkboxTheme.backgroundColor ??
-                            theme.colorScheme.controlsBackgroundColor,
-                    gradient: !isEnabled
-                        ? null
-                        : LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                                const Color(0xffdcdcd7),
-                                theme.checkboxTheme.backgroundColor ??
-                                    theme.colorScheme.controlsBackgroundColor
-                              ])),
-                child: SizedBox(
-                  height: _kDefaultCheckboxSize,
-                  width: _kDefaultCheckboxSize,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                        boxShadow: _hover && isEnabled
-                            ? [
-                                BoxShadow(
-                                    inset: true,
-                                    offset: const Offset(-1, 1),
-                                    color: theme.buttonStyle!.hoverColorTop),
-                                BoxShadow(
-                                    inset: true,
-                                    offset: const Offset(1, 2),
-                                    color: theme.buttonStyle!.hoverColorRight),
-                                BoxShadow(
-                                    inset: true,
-                                    offset: const Offset(-2, 2),
-                                    color: theme.buttonStyle!.hoverColorLeft),
-                                BoxShadow(
-                                    inset: true,
-                                    offset: const Offset(2, -2),
-                                    color: theme.buttonStyle!.hoverColorBottom)
-                              ]
-                            : []),
-                    child: widget.value
-                        ? Icon(
-                            Icons.check,
-                            size: _kDefaultCheckboxSize * 0.9,
-                            color: theme.checkboxTheme.checkColor ??
-                                theme.colorScheme.accentColor,
-                          )
-                        : null,
-                  ),
-                )),
-            const SizedBox(
-              width: _kDefaultSpacing,
-            ),
-            Text(
-              widget.label,
-              style: TextStyle(
-                  color: isEnabled ? null : theme.colorScheme.disabledColor),
-            )
-          ],
+    return GestureDetector(
+      onTap: () {
+        if (!isEnabled) return;
+        widget.onChanged!(!widget.value);
+      },
+      child: MouseRegion(
+        onEnter: (event) => setState(() => _hover = true),
+        onExit: (event) => setState(() => _hover = false),
+        child: SizedBox(
+          width: _labelWidth! + _kDefaultCheckboxSize + (_kDefaultSpacing * 2),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(
+                width: _kDefaultSpacing,
+              ),
+              DecoratedBox(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          strokeAlign: BorderSide.strokeAlignOutside,
+                          color: !isEnabled
+                              ? theme.checkboxTheme.disabledColor ??
+                                  theme.colorScheme.disabledColor
+                              : theme.checkboxTheme.borderColor ??
+                                  theme.colorScheme.borderControlColor),
+                      color: isEnabled
+                          ? null
+                          : theme.checkboxTheme.backgroundColor ??
+                              theme.colorScheme.controlsBackgroundColor,
+                      gradient: !isEnabled
+                          ? null
+                          : LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                  const Color(0xffdcdcd7),
+                                  theme.checkboxTheme.backgroundColor ??
+                                      theme.colorScheme.controlsBackgroundColor
+                                ])),
+                  child: SizedBox(
+                    height: _kDefaultCheckboxSize,
+                    width: _kDefaultCheckboxSize,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                          boxShadow: _hover && isEnabled
+                              ? [
+                                  BoxShadow(
+                                      inset: true,
+                                      offset: const Offset(-1, 1),
+                                      color: theme.buttonStyle!.hoverColorTop),
+                                  BoxShadow(
+                                      inset: true,
+                                      offset: const Offset(1, 2),
+                                      color:
+                                          theme.buttonStyle!.hoverColorRight),
+                                  BoxShadow(
+                                      inset: true,
+                                      offset: const Offset(-2, 2),
+                                      color: theme.buttonStyle!.hoverColorLeft),
+                                  BoxShadow(
+                                      inset: true,
+                                      offset: const Offset(2, -2),
+                                      color:
+                                          theme.buttonStyle!.hoverColorBottom)
+                                ]
+                              : []),
+                      child: widget.value
+                          ? Icon(
+                              Icons.check,
+                              size: _kDefaultCheckboxSize * 0.9,
+                              color: theme.checkboxTheme.checkColor ??
+                                  theme.colorScheme.accentColor,
+                            )
+                          : null,
+                    ),
+                  )),
+              const SizedBox(
+                width: _kDefaultSpacing,
+              ),
+              Text(
+                widget.label,
+                style: TextStyle(
+                    color: isEnabled ? null : theme.colorScheme.disabledColor),
+              )
+            ],
+          ),
         ),
       ),
     );
