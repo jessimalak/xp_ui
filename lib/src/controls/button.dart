@@ -18,26 +18,6 @@ class _ButtonState extends State<Button> {
   bool _hover = false;
   bool _tap = false;
 
-  static const Gradient _normalBackground = LinearGradient(
-      colors: [
-        Color(0xFFFFFFFF),
-        Color(0xFFecebe5),
-        Color(0xFFd8d0c4),
-      ],
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      stops: [0, .86, 1]);
-  static const Gradient _tapBackground = LinearGradient(
-      colors: [
-        Color(0xFFCDCAC3),
-        Color(0xFFE3E3DB),
-        Color(0xFFE5E5DE),
-        Color(0xFFF2F2F1),
-      ],
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      stops: [0, .8, .94, 1]);
-
   @override
   Widget build(BuildContext context) {
     final theme = XpTheme.of(context);
@@ -69,7 +49,9 @@ class _ButtonState extends State<Button> {
               color: buttonStyle.borderColor,
               strokeAlign: BorderSide.strokeAlignOutside,
               width: 0.5),
-          gradient: _tap ? _tapBackground : _normalBackground),
+          gradient: _tap
+              ? ButtonThemeData.tapBackground
+              : ButtonThemeData.normalBackground),
       child: MouseRegion(
         onEnter: !widget.enabled
             ? null
