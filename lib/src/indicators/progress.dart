@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:xp_ui/src/styles/colors.dart';
 import 'package:xp_ui/xp_ui.dart';
 import 'dart:math' as math;
 
@@ -45,7 +44,8 @@ class ProgressBar extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
               border: Border.all(
-                  color: theme.progressBarTheme.borderColor ?? theme.colorScheme.borderColor,
+                  color: theme.progressBarTheme.borderColor ??
+                      theme.colorScheme.borderColor,
                   strokeAlign: BorderSide.strokeAlignOutside),
               borderRadius: const BorderRadius.all(Radius.circular(3))),
           child: value == null
@@ -53,8 +53,10 @@ class ProgressBar extends StatelessWidget {
               : CustomPaint(
                   painter: _ProgressDeterminatedBarPainter(
                     value!,
-                    backgroundColor: theme.progressBarTheme.backgroundColor ?? theme.colorScheme.controlsBackgroundColor,
-                    activeColor: theme.progressBarTheme.trackColor  ?? theme.colorScheme.accentColor,
+                    backgroundColor: theme.progressBarTheme.backgroundColor ??
+                        theme.colorScheme.controlsBackgroundColor,
+                    activeColor: theme.progressBarTheme.trackColor ??
+                        theme.colorScheme.accentColor,
                   ),
                 ),
         ),
@@ -95,7 +97,7 @@ class _ProgressDeterminatedBarPainter extends CustomPainter {
     final double progressItemHeight = size.height - _padding * 2;
     final progressItemWidth = _progressItemWidth + extraWidth;
     final gradient = LinearGradient(
-            colors: [XpColors.white, activeColor, XpColors.white],
+            colors: [backgroundColor, activeColor, backgroundColor],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter)
         .createShader(Rect.fromLTWH(0, 0, size.width, size.height));
@@ -186,8 +188,10 @@ class _ProgressIndeterminatedBarWidgetState
                 cycle = values[2];
                 idle = values[3];
               },
-              backgroundColor: theme.progressBarTheme.backgroundColor ?? theme.colorScheme.controlsBackgroundColor,
-              activeColor: theme.progressBarTheme.trackColor ?? theme.colorScheme.accentColor,
+              backgroundColor: theme.progressBarTheme.backgroundColor ??
+                  theme.colorScheme.controlsBackgroundColor,
+              activeColor: theme.progressBarTheme.trackColor ??
+                  theme.colorScheme.accentColor,
             ),
           );
         });
@@ -227,7 +231,7 @@ class _ProgressIndeterminatedBarPainter extends CustomPainter {
           ..style = PaintingStyle.fill);
     void drawLine(Offset xy1) {
       final gradient = LinearGradient(
-              colors: [XpColors.white, activeColor, XpColors.white],
+              colors: [backgroundColor, activeColor, backgroundColor],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter)
           .createShader(Rect.fromLTWH(0, 0, size.width, size.height));
