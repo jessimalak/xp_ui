@@ -17,7 +17,7 @@ class ColorScheme {
     this.primaryColor = XpColors.moonBlue,
     this.activeColor = XpColors.orange,
     this.accentColor = XpColors.green,
-    this.backgroundColor = XpColors.windowBackground,
+    this.backgroundColor = XpDefaultThemeColors.windowBackground,
     this.controlsBackgroundColor = XpColors.white,
     this.textColor = XpDefaultThemeColors.textColor,
     this.borderColor = XpDefaultThemeColors.outlineColor,
