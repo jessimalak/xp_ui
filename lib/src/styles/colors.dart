@@ -9,6 +9,7 @@ class XpColors {
   static const Color transparent = Color(0x00ffffff);
   static const Color white = Color(0xffffffff);
   static const Color black = Color(0xff000000);
+  static const Color grey = Color(0xFF656565);
   static const Color green = Color(0xff42d845);
   static const Color darkGreen = Color(0xFF1E821F);
   static const Color red = Color(0xff9b1e00);
@@ -35,4 +36,5 @@ class XpDefaultThemeColors {
   static const Color expandableContentBackgroundColor = Color(0xFFD6DFF6);
   static const Color expandableTextColor = Color(0xFF195BC2);
   static const Color expandableTitleEndColor = Color(0xFFC5D6FB);
+  static const Color statusbarDividerColor = Color.fromARGB(192, 208, 206, 191);
 }

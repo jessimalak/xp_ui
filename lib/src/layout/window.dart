@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:xp_ui/src/controls/title_bar.dart';
 import 'package:xp_ui/src/layout/scrollbar.dart';
 import 'package:xp_ui/src/layout/sidebar/sidebar.dart';
+import 'package:xp_ui/src/layout/status_bar.dart';
 import 'package:xp_ui/src/styles/colors.dart';
 import 'package:xp_ui/src/styles/theme/theme.dart';
 import 'dart:math' as math;
@@ -17,6 +18,7 @@ class XpWindow extends StatefulWidget {
     this.child,
     this.titleBar,
     this.sidebar,
+    this.statusBar,
   });
 
   /// Specifies the background color for the Window.
@@ -32,6 +34,8 @@ class XpWindow extends StatefulWidget {
 
   /// A sidebar to display at the left of the window.
   final Sidebar? sidebar;
+
+  final StatusBar? statusBar;
 
   @override
   State<XpWindow> createState() => _XpWindowState();
@@ -247,6 +251,7 @@ class _XpWindowState extends State<XpWindow> {
               child: Padding(
                 padding: EdgeInsets.only(
                   top: widget.titleBar != null ? 32 : 0,
+                  bottom: widget.statusBar != null ? kDefaultStatusBarHeight : 0
                 ),
                 child: widget.child ?? const SizedBox.shrink(),
               ),
@@ -261,6 +266,8 @@ class _XpWindowState extends State<XpWindow> {
               child: widget.titleBar ?? const SizedBox.shrink(),
             ),
           ),
+          if (widget.statusBar != null)
+            Positioned(bottom: 0, width: width, child: widget.statusBar!)
         ],
       );
 
