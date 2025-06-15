@@ -1,6 +1,6 @@
 # xp_ui
 
-<img src="https://img.shields.io/badge/pub-0.0.1-lightblue?style=plastic" alt="pub" /> 
+<img src="https://img.shields.io/badge/pub-0.2.0-lightblue?style=plastic" alt="pub" /> 
 
 Windows Xp UI components for Flutter apps, inspired on [flutter95](https://pub.dev/packages/flutter95) and [fluent_ui](https://pub.dev/packages/fluent_ui)
 
@@ -13,7 +13,7 @@ Windows Xp UI components for Flutter apps, inspired on [flutter95](https://pub.d
 Add this to your package's `pubspec.yaml` file:
 ```yaml
 dependencies:
-  xp_ui: ^0.0.1
+  xp_ui: ^0.2.0
 ```
 To hide the native title bar and enable the maximize and minimize buttons install `window_manager` package. See [Documentation](https://pub.dev/packages/window_manager)
 
