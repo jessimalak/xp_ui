@@ -6,9 +6,9 @@ const double kDefaultStatusBarHeight = 24;
 
 class StatusBar extends StatelessWidget {
   final Widget child;
-  final List<Widget> rightChildren;
+  final List<Widget> trailing;
   const StatusBar(
-      {super.key, required this.child, this.rightChildren = const []});
+      {super.key, required this.child, this.trailing = const []});
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,8 @@ class StatusBar extends StatelessWidget {
                 child,
                 Row(
                   children: [
-                    if (rightChildren.isNotEmpty) divider,
-                    ...rightChildren.expand((button) sync* {
+                    if (trailing.isNotEmpty) divider,
+                    ...trailing.expand((button) sync* {
                       yield divider;
                       yield button;
                     }).skip(1)
