@@ -53,6 +53,7 @@ class RadioOptions<T> extends StatelessWidget {
     return Flex(
       spacing: 8,
       direction: direction,
+      mainAxisSize: MainAxisSize.min,
       children: children,
     );
   }
