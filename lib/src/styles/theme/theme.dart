@@ -6,6 +6,7 @@ import 'package:xp_ui/src/styles/theme/button_theme.dart';
 import 'package:xp_ui/src/styles/theme/checkbox_theme.dart';
 import 'package:xp_ui/src/styles/theme/color_scheme.dart';
 import 'package:xp_ui/src/styles/theme/expandable_item_theme.dart';
+import 'package:xp_ui/src/styles/theme/group_theme.dart';
 import 'package:xp_ui/src/styles/theme/progressbar_theme.dart';
 import 'package:xp_ui/src/styles/theme/sidebar_theme.dart';
 import 'package:xp_ui/src/styles/theme/textbox_theme.dart';
@@ -47,6 +48,9 @@ class XpThemeData with Diagnosticable {
   final SidebarThemeData sidebarTheme;
   final ExpandableItemThemeData expandableItemTheme;
   late final CheckboxThemeData checkboxTheme;
+  final Duration fastAnimationDuration;
+  final Curve animationCurve;
+  final GroupThemeData groupTheme;
 
   XpThemeData(
       {ColorScheme? colorScheme,
@@ -56,8 +60,11 @@ class XpThemeData with Diagnosticable {
       TitleBarThemeData? titleBarTheme,
       ScrollbarTheme? scrollbarTheme,
       SidebarThemeData? sidebarTheme,
-      this. checkboxTheme = const CheckboxThemeData(),
-      ExpandableItemThemeData? expandableItemTheme})
+      this.checkboxTheme = const CheckboxThemeData(),
+      this.fastAnimationDuration = const Duration(milliseconds: 300),
+      this.animationCurve = Curves.linear,
+      ExpandableItemThemeData? expandableItemTheme,
+      this.groupTheme = const GroupThemeData()})
       : colorScheme = colorScheme ?? ColorScheme(),
         scrollbarTheme = scrollbarTheme ??
             ScrollbarTheme(

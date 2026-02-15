@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:xp_ui/src/dialogs/dialog_page.dart';
 import 'package:xp_ui/xp_ui.dart';
 
-const _kDefaultDialogConstraints = BoxConstraints(
-  minWidth: 260,
-  maxWidth: 260,
-);
-
 const double _kDefaultBorderWidth = 3;
 
-enum AlertType { error, success, warning, info, question,none }
+enum AlertType { error, success, warning, info, question, none }
 
 class XpAlertDialog extends StatelessWidget {
   const XpAlertDialog(
@@ -36,40 +31,38 @@ class XpAlertDialog extends StatelessWidget {
     );
     return Dialog(
       backgroundColor: theme.colorScheme.backgroundColor,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(6))),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(6))),
       clipBehavior: Clip.hardEdge,
-      child: ConstrainedBox(
-        constraints: _kDefaultDialogConstraints,
+      child: IntrinsicWidth(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TitleBar.dialog(
+            TitleBar(
               title,
-              showCloseButton: showCloseButton,
+              trailing: [
+                XpCloseButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ],
             ),
             DecoratedBox(
               decoration: BoxDecoration(
                   border: Border(
-                      left: BorderSide(
-                          color: theme.colorScheme.primaryColor,
-                          width: _kDefaultBorderWidth),
-                      bottom: BorderSide(
-                          color: theme.titleBarTheme.backgroundShade3,
-                          width: _kDefaultBorderWidth),
-                      right: BorderSide(
-                          color: theme.titleBarTheme.backgroundShade3,
-                          width: _kDefaultBorderWidth))),
+                      left: BorderSide(color: theme.colorScheme.primaryColor, width: _kDefaultBorderWidth),
+                      bottom: BorderSide(color: theme.titleBarTheme.backgroundShade3, width: _kDefaultBorderWidth),
+                      right: BorderSide(color: theme.titleBarTheme.backgroundShade3, width: _kDefaultBorderWidth))),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     alerType == AlertType.none
                         ? child
-                        : Row(mainAxisSize: MainAxisSize.min,
+                        : Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               SystemIcon(
                                   icon: switch (alerType) {
@@ -121,12 +114,9 @@ Future<T?> showXpDialog<T>({
   bool useRootNavigator = true,
   RouteSettings? routeSettings,
 }) {
-  return Navigator.of(context, rootNavigator: useRootNavigator).push<T>(
-      XpDialogRoute(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              builder(context),
-          barrierColor: barrierColor,
-          barrierDismissible: barrierDismissible,
-          barrierLabel: barrierLabel ??
-              MaterialLocalizations.of(context).modalBarrierDismissLabel));
+  return Navigator.of(context, rootNavigator: useRootNavigator).push<T>(XpDialogRoute(
+      pageBuilder: (context, animation, secondaryAnimation) => builder(context),
+      barrierColor: barrierColor,
+      barrierDismissible: barrierDismissible,
+      barrierLabel: barrierLabel ?? MaterialLocalizations.of(context).modalBarrierDismissLabel));
 }
