@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:xp_ui/src/dialogs/dialog_page.dart';
 import 'package:xp_ui/xp_ui.dart';
 
-const _kDefaultDialogConstraints = BoxConstraints(
-  minWidth: 260,
-  maxWidth: 260,
-);
-
 const double _kDefaultBorderWidth = 3;
 
 enum AlertType { error, success, warning, info, question,none }
@@ -39,8 +34,7 @@ class XpAlertDialog extends StatelessWidget {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(6))),
       clipBehavior: Clip.hardEdge,
-      child: ConstrainedBox(
-        constraints: _kDefaultDialogConstraints,
+      child: IntrinsicWidth(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
