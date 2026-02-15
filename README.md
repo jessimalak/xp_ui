@@ -1,6 +1,6 @@
 # xp_ui
 
-<img src="https://img.shields.io/badge/pub-0.2.0-lightblue?style=plastic" alt="pub" /> 
+<img src="https://img.shields.io/badge/pub-0.3.0-lightblue?style=plastic" alt="pub" /> 
 
 Windows Xp UI components for Flutter apps, inspired on [flutter95](https://pub.dev/packages/flutter95) and [fluent_ui](https://pub.dev/packages/fluent_ui)
 
@@ -13,7 +13,7 @@ Windows Xp UI components for Flutter apps, inspired on [flutter95](https://pub.d
 Add this to your package's `pubspec.yaml` file:
 ```yaml
 dependencies:
-  xp_ui: ^0.2.0
+  xp_ui: ^0.3.0
 ```
 To hide the native title bar and enable the maximize and minimize buttons install `window_manager` package. See [Documentation](https://pub.dev/packages/window_manager)
 
@@ -35,22 +35,32 @@ Required to load all Xp styles, is compatible with standart flutter material Wid
 `XpWindow` is the basic frame for a Xp-style layout. It supports a `Sidebar` on the left, and optional `TitleBar` at the top.
 
 #### TitleBar
-Provides the window title bar with customizable 4 action button.
-> [!CAUTION]
-> The [window_manager](https://pub.dev/packages/window_manager) package is required to work.
+Provides the window title bar with customizable action buttons.
+
 
 ![Xp style window title bar](images/titlebar.png)
 ```dart
 XpWindow(
     titlebar: TitleBar(
         'Example',
-        showHelpButton: true,
-        showMaximizeButton: true,
-        showMinimizeButton: true,
-        showCloseButton: true,
-        onHelpButtonPressed: () {},
+        leading: [
+          XpCloseButton(),
+          TitleBarActionButton(icon: ActionButtonIcon.minimize),
+          TitleBarActionButton(icon: ActionButtonIcon.maximize),
+        ],
+        trailing: [
+          TitleBarActionButton(icon: ActionButtonIcon.help),
+        ]
       )
 )
+```
+
+#### System Icon
+Show Xp-style icons from `SystemIcons` collection.
+![two xp style computer](assets/system_icons/computer.png) ![two xp style folder](assets/system_icons/folderClose.png) ![two xp style volume icon](assets/system_icons/sound.png) ![two xp style folder](assets/system_icons/printer.png)
+
+```dart
+SystemIcon(icon: XpSystemIcons.folderDocument)
 ```
 
 #### Sidebar
@@ -111,6 +121,20 @@ SidebarExpandableItem(
         ]),
 ```
 
+#### Status bar
+Provides the bottom window status bar with a child on the left side, and an optional list of widgets for the right side.
+
+
+![Xp style window bottom status bar](images/status_bar.png)
+```dart
+XpWindow(
+    statusBar: StatusBar(
+        trailing: const [Text('Slide 1'), Text('Data')],
+        child: Text('Current progress 88%'),
+      )
+)
+```
+
 #### Button
 
 ![enabled button](images/button/button_enabled.png) ![disabled button](images/button/button_disabled.png)
@@ -138,7 +162,7 @@ ProgressBar()
 
 #### Checkbox
 
-![two xp style checkboxes](images/checkbox.png)
+![three xp style checkboxes](images/checkbox.png)
 
 ```dart
 XpCheckbox(
@@ -152,6 +176,20 @@ XpCheckbox(
     onChanged: (value) {}
 )
 ```
+
+### Radio options
+![five xp style radio button options](images/radio_options.png)
+```dart
+int _option = 0;
+RadioOptions<int>(
+  direction: Axis.horizontal,
+  wrap: false,
+  selected: _option,
+  options:
+  List.generate(5, (i) => RadioOption(enabled: true, value: i, label: 'Option $i')),
+  onChanged: (value) {})
+```
+
 
 #### Textbox
 
@@ -169,6 +207,18 @@ Textbox(
     labelPosition: TextboxLabelPosition.left,
 )
 ```
+
+### Group
+```dart
+Group(
+  label: Text("Group label"),
+  spacing: 8,
+  children: [
+    Text('Group content'),
+    SystemIcon(icon: XpSystemIcons.camera)
+    ])
+```
+
 #### Dialogs
 ![two xp style alert dialog](images/alerts/alert.png)
 ```dart
@@ -210,14 +260,6 @@ AlertType.success;
 ```
 ![two xp style alert dialog](images/alerts/alert_success.png)
 
-
-#### XpIcon
-Show Xp-style icons from `SystemIcons` collection.
-![two xp style computer](assets/system_icons/computer.png) ![two xp style folder](assets/system_icons/folderClose.png) ![two xp style volume icon](assets/system_icons/sound.png) ![two xp style folder](assets/system_icons/printer.png)
-
-```dart
-SystemIcon(icon: XpSystemIcons.folderDocument)
-```
 
 <hr>
 

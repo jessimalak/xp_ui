@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
           leading: Platform.isMacOS ? [closeButton, minimize, maximizeButton] : [],
           trailing: Platform.isMacOS ? [helpButton] : [helpButton, minimize, maximizeButton, closeButton]),
       statusBar: StatusBar(
-        rightChildren: const [Text('Slide 1'), Text('Data')],
+        trailing: const [Text('Slide 1'), Text('Data')],
         child: Text('Current progress $_counter%'),
       ),
       sidebar: Sidebar(
@@ -198,6 +198,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Wrap(
                         children: [
+                          const Group(
+                              label: Text("Group label"),
+                              children: [Text('Group content'), SystemIcon(icon: XpSystemIcons.camera)]),
                           Group(
                             spacing: 16,
                             label: const Text("Buttons and Alerts"),
@@ -366,6 +369,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           Group(label: const Text('Radio options'), children: [
                             RadioOptions(
+                                direction: Axis.horizontal,
                                 selected: _option,
                                 options:
                                     List.generate(5, (i) => RadioOption(enabled: i != 3, value: i, label: 'Option $i')),
