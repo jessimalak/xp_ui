@@ -10,7 +10,7 @@ void main() async {
   if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
     await windowManager.ensureInitialized();
     WindowOptions windowOptions =
-        const WindowOptions(titleBarStyle: TitleBarStyle.hidden);
+        const WindowOptions(titleBarStyle: TitleBarStyle.hidden, windowButtonVisibility: false);
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
       await windowManager.focus();
@@ -44,6 +44,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool get _isDesktop => Platform.isLinux || Platform.isWindows || Platform.isMacOS;
   int _counter = 0;
   late final Timer _timer;
 
@@ -76,11 +77,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return XpWindow(
-      titleBar: TitleBar.window(
-        'Example',
-        showHelpButton: true,
-        onHelpButtonPressed: () {
+    final helpButton = TitleBarActionButton(
+        icon: ActionButtonIcon.help,
+        onPressed: () {
           showXpDialog(
               context: context,
               builder: (context) => const XpAlertDialog(
@@ -88,8 +87,35 @@ class _MyHomePageState extends State<MyHomePage> {
                     content: Text('Xp_ui for flutter\nBy Malak;'),
                     alerType: AlertType.info,
                   ));
-        },
-      ),
+        });
+    final closeButton = XpCloseButton(
+      onPressed: () {
+        if (!_isDesktop) return;
+        windowManager.close();
+      },
+    );
+    final maximizeButton = TitleBarActionButton(
+      icon: ActionButtonIcon.maximize,
+      onPressed: () async {
+        if (!_isDesktop) return;
+        if (await windowManager.isMaximized()) {
+          windowManager.unmaximize();
+        } else {
+          windowManager.maximize();
+        }
+      },
+    );
+    final minimize = TitleBarActionButton(
+      icon: ActionButtonIcon.minimize,
+      onPressed: () {
+        if (!_isDesktop) return;
+        windowManager.minimize();
+      },
+    );
+    return XpWindow(
+      titleBar: TitleBar('Example',
+          leading: Platform.isMacOS ? [closeButton, minimize, maximizeButton] : [],
+          trailing: Platform.isMacOS ? [helpButton] : [helpButton, minimize, maximizeButton, closeButton]),
       statusBar: StatusBar(
         rightChildren: const [Text('Slide 1'), Text('Data')],
         child: Text('Current progress $_counter%'),
@@ -100,22 +126,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: const Column(
                   spacing: 8,
                   children: [
-                    SidebarExpandableItem(
-                        initiallyExpanded: true,
-                        title: Text('Expandable item'),
-                        children: [
-                          ListTile(
-                              label: Text('Documents'),
-                              icon: SystemIcon(
-                                  icon: XpSystemIcons.folderDocument)),
-                          ListTile(
-                              label: Text('Music'),
-                              icon:
-                                  SystemIcon(icon: XpSystemIcons.folderMusic)),
-                          ListTile(
-                              label: Text('My PC'),
-                              icon: SystemIcon(icon: XpSystemIcons.computer))
-                        ]),
+                    SidebarExpandableItem(initiallyExpanded: true, title: Text('Expandable item'), children: [
+                      ListTile(label: Text('Documents'), icon: SystemIcon(icon: XpSystemIcons.folderDocument)),
+                      ListTile(label: Text('Music'), icon: SystemIcon(icon: XpSystemIcons.folderMusic)),
+                      ListTile(label: Text('My PC'), icon: SystemIcon(icon: XpSystemIcons.computer))
+                    ]),
                     SidebarExpandableItem(
                       initiallyExpanded: true,
                       title: Text('Details'),
@@ -181,190 +196,185 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Group(
-                        spacing: 16,
-                        label: const Text("Buttons and Alerts"),
+                      Wrap(
                         children: [
-                          Button(
-                            onPressed: () {
-                              showXpDialog(
-                                  context: context,
-                                  builder: (context) => XpAlertDialog(
-                                        title: 'Simple Alert',
-                                        content: const Text(
-                                            'This is a simple alert dialog'),
-                                        actions: [
-                                          Button(
-                                            child: const Text('Cancel'),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                          Button(
-                                            child: const Text('Accept'),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                          )
-                                        ],
-                                      ));
-                            },
-                            child: const Text('show simple alert'),
+                          Group(
+                            spacing: 16,
+                            label: const Text("Buttons and Alerts"),
+                            children: [
+                              Button(
+                                onPressed: () {
+                                  showXpDialog(
+                                      context: context,
+                                      builder: (context) => XpAlertDialog(
+                                            title: 'Simple Alert',
+                                            content: const Text('This is a simple alert dialog'),
+                                            actions: [
+                                              Button(
+                                                child: const Text('Cancel'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                              Button(
+                                                child: const Text('Accept'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              )
+                                            ],
+                                          ));
+                                },
+                                child: const Text('show simple alert'),
+                              ),
+                              Button(
+                                onPressed: () {
+                                  showXpDialog(
+                                      context: context,
+                                      builder: (context) => XpAlertDialog(
+                                            title: 'Warning Alert',
+                                            alerType: AlertType.warning,
+                                            content: const Text('This is a warning alert dialog'),
+                                            actions: [
+                                              Button(
+                                                child: const Text('Cancel'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                              Button(
+                                                child: const Text('Accept'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              )
+                                            ],
+                                          ));
+                                },
+                                child: const Text('show warning alert'),
+                              ),
+                              Button(
+                                onPressed: () {
+                                  showXpDialog(
+                                      context: context,
+                                      builder: (context) => XpAlertDialog(
+                                            title: 'Error Alert',
+                                            alerType: AlertType.error,
+                                            content: const Text('This is an error alert dialog'),
+                                            actions: [
+                                              Button(
+                                                child: const Text('Cancel'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                              Button(
+                                                child: const Text('Accept'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              )
+                                            ],
+                                          ));
+                                },
+                                child: const Text('show error alert'),
+                              ),
+                              Button(
+                                onPressed: () {
+                                  showXpDialog(
+                                      context: context,
+                                      builder: (context) => XpAlertDialog(
+                                            title: 'Info Alert',
+                                            alerType: AlertType.info,
+                                            content: const Text('This is an info alert dialog'),
+                                            actions: [
+                                              Button(
+                                                child: const Text('Cancel'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                              Button(
+                                                child: const Text('Accept'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              )
+                                            ],
+                                          ));
+                                },
+                                child: const Text('show info alert'),
+                              ),
+                              Button(
+                                onPressed: () {
+                                  showXpDialog(
+                                      context: context,
+                                      builder: (context) => XpAlertDialog(
+                                            title: 'Question Alert',
+                                            alerType: AlertType.question,
+                                            content: const Text('This is an question alert dialog'),
+                                            actions: [
+                                              Button(
+                                                child: const Text('Cancel'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                              Button(
+                                                child: const Text('Accept'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              )
+                                            ],
+                                          ));
+                                },
+                                child: const Text('show question alert'),
+                              ),
+                              const Button(
+                                onPressed: null,
+                                child: Text('Disabled button'),
+                              ),
+                            ],
                           ),
-                          Button(
-                            onPressed: () {
-                              showXpDialog(
-                                  context: context,
-                                  builder: (context) => XpAlertDialog(
-                                        title: 'Warning Alert',
-                                        alerType: AlertType.warning,
-                                        content: const Text(
-                                            'This is a warning alert dialog'),
-                                        actions: [
-                                          Button(
-                                            child: const Text('Cancel'),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                          Button(
-                                            child: const Text('Accept'),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                          )
-                                        ],
-                                      ));
-                            },
-                            child: const Text('show warning alert'),
+                          Group(
+                            label: const Text('Checkbox'),
+                            children: [
+                              const XpCheckbox(
+                                value: false,
+                                label: 'checkbox disabled',
+                              ),
+                              XpCheckbox(
+                                value: _firstCheck,
+                                label: 'checkbox label',
+                                onChanged: (value) {
+                                  setState(() {
+                                    _firstCheck = value;
+                                  });
+                                },
+                              ),
+                              XpCheckbox(
+                                value: _secondCheck,
+                                label: 'checkbox label',
+                                onChanged: (value) {
+                                  setState(() {
+                                    _secondCheck = value;
+                                  });
+                                },
+                              ),
+                            ],
                           ),
-                          Button(
-                            onPressed: () {
-                              showXpDialog(
-                                  context: context,
-                                  builder: (context) => XpAlertDialog(
-                                        title: 'Error Alert',
-                                        alerType: AlertType.error,
-                                        content: const Text(
-                                            'This is an error alert dialog'),
-                                        actions: [
-                                          Button(
-                                            child: const Text('Cancel'),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                          Button(
-                                            child: const Text('Accept'),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                          )
-                                        ],
-                                      ));
-                            },
-                            child: const Text('show error alert'),
-                          ),
-                          Button(
-                            onPressed: () {
-                              showXpDialog(
-                                  context: context,
-                                  builder: (context) => XpAlertDialog(
-                                        title: 'Info Alert',
-                                        alerType: AlertType.info,
-                                        content: const Text(
-                                            'This is an info alert dialog'),
-                                        actions: [
-                                          Button(
-                                            child: const Text('Cancel'),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                          Button(
-                                            child: const Text('Accept'),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                          )
-                                        ],
-                                      ));
-                            },
-                            child: const Text('show info alert'),
-                          ),
-                          Button(
-                            onPressed: () {
-                              showXpDialog(
-                                  context: context,
-                                  builder: (context) => XpAlertDialog(
-                                        title: 'Question Alert',
-                                        alerType: AlertType.question,
-                                        content: const Text(
-                                            'This is an question alert dialog'),
-                                        actions: [
-                                          Button(
-                                            child: const Text('Cancel'),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                          Button(
-                                            child: const Text('Accept'),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                          )
-                                        ],
-                                      ));
-                            },
-                            child: const Text('show question alert'),
-                          ),
-                          const Button(
-                            onPressed: null,
-                            child: Text('Disabled button'),
-                          ),
+                          Group(label: const Text('Radio options'), children: [
+                            RadioOptions(
+                                selected: _option,
+                                options:
+                                    List.generate(5, (i) => RadioOption(enabled: i != 3, value: i, label: 'Option $i')),
+                                onChanged: (value) {
+                                  setState(() => _option = value);
+                                })
+                          ])
                         ],
                       ),
-                      Group(
-                        label: const Text('Checkbox'),
-                        children: [
-                          const XpCheckbox(
-                            value: false,
-                            label: 'checkbox disabled',
-                          ),
-                          XpCheckbox(
-                            value: _firstCheck,
-                            label: 'checkbox label',
-                            onChanged: (value) {
-                              setState(() {
-                                _firstCheck = value;
-                              });
-                            },
-                          ),
-                          XpCheckbox(
-                            value: _secondCheck,
-                            label: 'checkbox label',
-                            onChanged: (value) {
-                              setState(() {
-                                _secondCheck = value;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      Group(label: const Text('Radio options'), children: [
-                        RadioOptions(
-                            selected: _option,
-                            options: List.generate(
-                                5,
-                                (i) => RadioOption(
-                                    enabled: i != 3,
-                                    value: i,
-                                    label: 'Option $i')),
-                            onChanged: (value) {
-                              setState(() => _option = value);
-                            })
-                      ])
                     ],
                   ),
                 )),
